@@ -1,0 +1,164 @@
+
+<style>
+  .profile-wrap { font-family: var(--font-sans); padding: 2rem 1.5rem; max-width: 680px; }
+  .hero { display: flex; align-items: center; gap: 20px; margin-bottom: 2rem; }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #534AB7 0%, #1D9E75 100%); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 500; color: #fff; flex-shrink: 0; }
+  .hero-text h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px; }
+  .hero-text p { font-size: 13px; color: var(--color-text-secondary); margin: 0; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .badge-purple { background: #EEEDFE; color: #3C3489; }
+  .badge-teal { background: #E1F5EE; color: #0F6E56; }
+  .badge-amber { background: #FAEEDA; color: #854F0B; }
+  .badge-blue { background: #E6F1FB; color: #185FA5; }
+  .badge-coral { background: #FAECE7; color: #993C1D; }
+  .section-title { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--color-text-secondary); text-transform: uppercase; margin: 0 0 12px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+  .metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; }
+  .metric-label { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 4px; }
+  .metric-value { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+  .strength-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .strength-row:last-child { border-bottom: none; }
+  .strength-icon { width: 32px; height: 32px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .si-purple { background: #EEEDFE; color: #534AB7; }
+  .si-teal { background: #E1F5EE; color: #0F6E56; }
+  .si-amber { background: #FAEEDA; color: #854F0B; }
+  .si-blue { background: #E6F1FB; color: #185FA5; }
+  .strength-label { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+  .strength-sub { font-size: 12px; color: var(--color-text-secondary); margin: 0; }
+  .goal-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .goal-item:last-child { border-bottom: none; }
+  .goal-num { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); min-width: 18px; padding-top: 2px; }
+  .goal-text { font-size: 14px; color: var(--color-text-primary); margin: 0; line-height: 1.5; }
+  .dna-bar { display: flex; gap: 4px; align-items: center; margin: 8px 0; }
+  .dna-seg { height: 6px; border-radius: 3px; }
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; }
+  .skill-chip { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 10px; text-align: center; font-size: 12px; color: var(--color-text-primary); font-weight: 500; }
+  .archetype-tag { display: inline-flex; align-items: center; gap: 6px; background: #EEEDFE; color: #3C3489; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 20px; }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary); }
+  .footer-label { font-size: 11px; color: var(--color-text-secondary); }
+</style>
+
+<div class="profile-wrap">
+  <h2 class="sr-only">AI Personality Profile for Nidhi Yadav, Data Science professional</h2>
+
+  <div class="hero">
+    <div class="avatar">NY</div>
+    <div class="hero-text">
+      <h1>Nidhi Yadav</h1>
+      <p>Data Science Graduate · Active Intern · AI Practitioner</p>
+      <div class="badge-row">
+        <span class="badge badge-purple">Python</span>
+        <span class="badge badge-teal">Machine Learning</span>
+        <span class="badge badge-blue">SQL</span>
+        <span class="badge badge-amber">Power BI</span>
+        <span class="badge badge-teal">NLP</span>
+        <span class="badge badge-coral">Tableau</span>
+        <span class="badge badge-blue">Data Analytics</span>
+        <span class="badge badge-purple">GenAI</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="metric">
+      <p class="metric-label">Archetype</p>
+      <p class="metric-value" style="font-size:15px;">The Data Architect</p>
+    </div>
+    <div class="metric">
+      <p class="metric-label">Trajectory</p>
+      <p class="metric-value" style="font-size:15px; color: #0F6E56;">↑ Accelerating</p>
+    </div>
+    <div class="metric">
+      <p class="metric-label">Domain Focus</p>
+      <p class="metric-value" style="font-size:15px;">AI · Analytics</p>
+    </div>
+    <div class="metric">
+      <p class="metric-label">Learning Style</p>
+      <p class="metric-value" style="font-size:15px;">Project-first</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Core strengths</p>
+    <div class="strength-row">
+      <div class="strength-icon si-purple"><i class="ti ti-bolt" style="font-size:16px" aria-hidden="true"></i></div>
+      <div>
+        <p class="strength-label">Fast learner</p>
+        <p class="strength-sub">Rapidly absorbs new frameworks, tools, and paradigms</p>
+      </div>
+    </div>
+    <div class="strength-row">
+      <div class="strength-icon si-teal"><i class="ti ti-chart-dots-3" style="font-size:16px" aria-hidden="true"></i></div>
+      <div>
+        <p class="strength-label">Analytical thinking</p>
+        <p class="strength-sub">Breaks complex problems into structured, solvable parts</p>
+      </div>
+    </div>
+    <div class="strength-row">
+      <div class="strength-icon si-amber"><i class="ti ti-stack-2" style="font-size:16px" aria-hidden="true"></i></div>
+      <div>
+        <p class="strength-label">Project-oriented mindset</p>
+        <p class="strength-sub">Transforms ideas into tangible, portfolio-ready work</p>
+      </div>
+    </div>
+    <div class="strength-row">
+      <div class="strength-icon si-blue"><i class="ti ti-refresh" style="font-size:16px" aria-hidden="true"></i></div>
+      <div>
+        <p class="strength-label">Continuous learner</p>
+        <p class="strength-sub">Driven by curiosity; never settles for "good enough"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Career goals</p>
+    <div class="goal-item">
+      <span class="goal-num">01</span>
+      <p class="goal-text">Become a Data Analyst / Data Scientist with real-world impact</p>
+    </div>
+    <div class="goal-item">
+      <span class="goal-num">02</span>
+      <p class="goal-text">Build a strong portfolio of industry-ready data projects</p>
+    </div>
+    <div class="goal-item">
+      <span class="goal-num">03</span>
+      <p class="goal-text">Master AI and GenAI tools to stay ahead of the curve</p>
+    </div>
+    <div class="goal-item">
+      <span class="goal-num">04</span>
+      <p class="goal-text">Sharpen problem-solving and analytical depth</p>
+    </div>
+    <div class="goal-item">
+      <span class="goal-num">05</span>
+      <p class="goal-text">Secure a strong, fulfilling career in Data Science and AI</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Technical stack</p>
+    <div class="skill-grid">
+      <div class="skill-chip">Python</div>
+      <div class="skill-chip">SQL</div>
+      <div class="skill-chip">ML</div>
+      <div class="skill-chip">NLP</div>
+      <div class="skill-chip">Power BI</div>
+      <div class="skill-chip">Tableau</div>
+      <div class="skill-chip">Analytics</div>
+      <div class="skill-chip">GenAI</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left: 2px solid #534AB7; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;">
+    <p class="section-title">Profile signature</p>
+    <p style="font-size: 14px; color: var(--color-text-primary); line-height: 1.7; margin: 0; font-family: var(--font-serif);">
+      "A data-driven mind in motion — fluent in the language of patterns, relentless in the pursuit of insight. Nidhi doesn't just work with data; she builds futures from it."
+    </p>
+  </div>
+
+  <div class="footer-row">
+    <span class="footer-label">AI Personality Profile · Generated by Claude</span>
+    <span class="archetype-tag"><i class="ti ti-brain" style="font-size:14px" aria-hidden="true"></i> The Data Architect</span>
+  </div>
+</div>
