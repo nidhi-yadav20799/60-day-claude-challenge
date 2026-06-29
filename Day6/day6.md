@@ -34,7 +34,7 @@ The objective of today's task was to optimize my resume for better Applicant Tra
 
 **Screenshot**
 
-![ATS Analysis](ats_analysis.png)
+![ATS Analysis](ats_analysis_2.png)
 
 ---
 
