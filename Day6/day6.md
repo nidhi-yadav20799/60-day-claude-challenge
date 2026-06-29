@@ -42,12 +42,10 @@ The objective of today's task was to optimize my resume for better Applicant Tra
 
 **Resume File**
 
-* [Optimized Resume](optimized_resume.pdf)
-
+- [Optimized Resume](optimized_resume.pdf)
 **Screenshot**
 
 ![Optimized Resume](optimized_resume.png)
-
 ---
 
 ## Key Learnings
