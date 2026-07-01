@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🌍 Personal Environmental Health Analyzer</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --void:#0B1120;
@@ -34,18 +31,23 @@
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
+  :root{
+    --font-display:'Segoe UI Semibold','Space Grotesk',-apple-system,'Helvetica Neue',Arial,sans-serif;
+    --font-body:'Segoe UI',Inter,-apple-system,'Helvetica Neue',Arial,sans-serif;
+    --font-mono:'Consolas','SFMono-Regular','JetBrains Mono',Menlo,monospace;
+  }
   body{
     background:
       radial-gradient(ellipse 900px 500px at 15% -10%, rgba(79,209,197,.10), transparent 60%),
       radial-gradient(ellipse 700px 500px at 100% 0%, rgba(56,189,248,.08), transparent 55%),
       var(--void);
     color:var(--text-hi);
-    font-family:'Inter',sans-serif;
+    font-family:var(--font-body);
     min-height:100vh;
     padding-bottom:80px;
   }
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .display{font-family:'Space Grotesk',sans-serif;}
+  .mono{font-family:var(--font-mono);}
+  .display{font-family:var(--font-display);}
   ::selection{background:var(--breath); color:#04211f;}
 
   a{color:var(--aqua);}
@@ -53,11 +55,11 @@
   /* ---------- Layout shells ---------- */
   .wrap{max-width:1320px; margin:0 auto; padding:0 24px;}
   .section-label{
-    font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.14em;
+    font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.14em;
     font-size:11.5px; color:var(--breath); margin-bottom:8px; display:flex; align-items:center; gap:8px;
   }
   .section-label::before{content:''; width:16px; height:1px; background:var(--breath); display:inline-block;}
-  h2.title{font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:600; margin-bottom:4px;}
+  h2.title{font-family:var(--font-display); font-size:clamp(22px,3vw,30px); font-weight:600; margin-bottom:4px;}
   .section{padding:56px 0;}
   .subtle{color:var(--text-mid); font-size:14.5px; line-height:1.6;}
 
@@ -70,25 +72,25 @@
   .topbar-inner{
     display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1320px; margin:0 auto;
   }
-  .brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:600; font-size:16px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:600; font-size:16px;}
   .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--breath); box-shadow:0 0 12px var(--breath); animation:pulseDot 2.4s ease-in-out infinite;}
   @keyframes pulseDot{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.4; transform:scale(1.4);}}
   .topbar-meta{display:flex; gap:18px; align-items:center; font-size:12.5px; color:var(--text-low);}
   .live-chip{
     display:flex; align-items:center; gap:6px; padding:5px 10px; border-radius:20px;
-    background:var(--breath-soft); color:var(--breath); font-family:'JetBrains Mono'; font-size:11.5px;
+    background:var(--breath-soft); color:var(--breath); font-family:var(--font-mono); font-size:11.5px;
   }
 
   /* ---------- Hero ---------- */
   .hero{padding:64px 0 40px; position:relative;}
   .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;}
-  .hero h1{font-family:'Space Grotesk'; font-weight:700; font-size:clamp(32px,4.4vw,52px); line-height:1.05; letter-spacing:-.01em;}
+  .hero h1{font-family:var(--font-display); font-weight:700; font-size:clamp(32px,4.4vw,52px); line-height:1.05; letter-spacing:-.01em;}
   .hero h1 span{color:var(--breath);}
   .hero p.lede{margin-top:16px; color:var(--text-mid); font-size:16px; line-height:1.7; max-width:520px;}
   .hero-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;}
   .tag{
     border:1px solid var(--mist); padding:6px 12px; border-radius:20px; font-size:12px; color:var(--text-mid);
-    font-family:'JetBrains Mono';
+    font-family:var(--font-mono);
   }
 
   /* breathing ring - signature element */
@@ -100,12 +102,12 @@
   .ring-pulse{position:absolute; inset:38px; border-radius:50%; background:radial-gradient(circle, var(--breath-soft), transparent 70%); animation:breathe 4s ease-in-out infinite;}
   @keyframes breathe{0%,100%{transform:scale(.92); opacity:.6;} 50%{transform:scale(1.08); opacity:1;}}
   .ring-center{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .ring-value{font-family:'Space Grotesk'; font-weight:700; font-size:52px; line-height:1;}
-  .ring-cat{font-family:'JetBrains Mono'; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; margin-top:6px;}
+  .ring-value{font-family:var(--font-display); font-weight:700; font-size:52px; line-height:1;}
+  .ring-cat{font-family:var(--font-mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; margin-top:6px;}
   .ring-sub{font-size:12px; color:var(--text-low); margin-top:2px;}
   select#heroCitySelect{
     background:var(--panel); border:1px solid var(--mist); color:var(--text-hi); padding:9px 14px; border-radius:10px;
-    font-family:'JetBrains Mono'; font-size:12.5px; cursor:pointer;
+    font-family:var(--font-mono); font-size:12.5px; cursor:pointer;
   }
 
   /* ---------- Metric cards ---------- */
@@ -115,8 +117,8 @@
     border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); position:relative; overflow:hidden;
   }
   .metric-card::after{content:''; position:absolute; top:-40px; right:-40px; width:100px; height:100px; border-radius:50%; background:var(--accent,var(--breath)); opacity:.10; filter:blur(10px);}
-  .metric-label{font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-low); font-family:'JetBrains Mono';}
-  .metric-value{font-family:'Space Grotesk'; font-weight:700; font-size:30px; margin-top:10px; color:var(--text-hi);}
+  .metric-label{font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-low); font-family:var(--font-mono);}
+  .metric-value{font-family:var(--font-display); font-weight:700; font-size:30px; margin-top:10px; color:var(--text-hi);}
   .metric-foot{margin-top:6px; font-size:12.5px; color:var(--text-mid);}
 
   /* ---------- Panels / cards generic ---------- */
@@ -127,11 +129,11 @@
 
   /* ---------- Filters ---------- */
   .filters-panel{display:grid; grid-template-columns:1.3fr 1fr 1fr 1.3fr; gap:22px;}
-  .filter-block label.flabel{font-size:11.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--breath); font-family:'JetBrains Mono'; display:block; margin-bottom:10px;}
+  .filter-block label.flabel{font-size:11.5px; text-transform:uppercase; letter-spacing:.09em; color:var(--breath); font-family:var(--font-mono); display:block; margin-bottom:10px;}
   .chip-row{display:flex; flex-wrap:wrap; gap:7px;}
   .chip-btn{
     background:var(--mist-soft); border:1px solid var(--mist); color:var(--text-mid); font-size:12px; padding:6px 11px;
-    border-radius:20px; cursor:pointer; transition:.2s; font-family:'Inter'; font-weight:500;
+    border-radius:20px; cursor:pointer; transition:.2s; font-family:var(--font-body); font-weight:500;
   }
   .chip-btn.active{background:var(--breath); color:#04211f; border-color:var(--breath); font-weight:600;}
   .chip-btn:hover{border-color:var(--breath);}
@@ -140,7 +142,7 @@
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--breath); cursor:pointer; box-shadow:0 0 8px var(--breath);}
   select, .select-like{
     width:100%; background:var(--mist-soft); border:1px solid var(--mist); color:var(--text-hi); padding:9px 12px;
-    border-radius:10px; font-size:13px; font-family:'Inter';
+    border-radius:10px; font-size:13px; font-family:var(--font-body);
   }
   .toggle-row{display:flex; align-items:center; gap:10px; margin-top:4px;}
   .switch{position:relative; width:42px; height:23px; background:var(--mist); border-radius:20px; cursor:pointer; transition:.2s;}
@@ -151,10 +153,30 @@
 
   /* ---------- Charts grid ---------- */
   .charts-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;}
-  .chart-card h3{font-family:'Space Grotesk'; font-size:15px; font-weight:600; margin-bottom:2px;}
+  .chart-card h3{font-family:var(--font-display); font-size:15px; font-weight:600; margin-bottom:2px;}
   .chart-card .cap{font-size:12px; color:var(--text-low); margin-bottom:14px;}
-  .chart-card canvas{max-height:260px;}
   .full-span{grid-column:1/-1;}
+
+  /* ---- custom dependency-free charts ---- */
+  .barchart{display:flex; align-items:flex-end; gap:8px; height:220px; padding-top:8px; overflow-x:auto;}
+  .bar-col{flex:1; min-width:44px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;}
+  .bar-fill{width:60%; border-radius:6px 6px 0 0; transition:height .7s cubic-bezier(.2,.8,.2,1); min-height:3px;}
+  .bar-val{font-family:var(--font-mono); font-size:11px; color:var(--text-hi); margin-bottom:6px; white-space:nowrap;}
+  .bar-label{font-size:10.5px; color:var(--text-low); margin-top:8px; text-align:center; max-width:56px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .hbar-row{display:grid; grid-template-columns:82px 1fr 46px; align-items:center; gap:10px; margin-bottom:11px;}
+  .hbar-row:first-child{margin-top:4px;}
+  .hbar-name{font-size:12px; color:var(--text-mid); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .hbar-track{height:14px; background:var(--mist-soft); border-radius:8px; overflow:hidden;}
+  .hbar-fill{height:100%; border-radius:8px; transition:width .7s cubic-bezier(.2,.8,.2,1); min-width:3px;}
+  .hbar-val{font-family:var(--font-mono); font-size:11.5px; text-align:right; color:var(--text-hi);}
+  .donut-wrap{display:flex; align-items:center; gap:36px; flex-wrap:wrap; justify-content:center; padding:10px 0;}
+  .donut{width:180px; height:180px; min-width:180px; border-radius:50%; position:relative; transition:background .6s ease;}
+  .donut-center{position:absolute; inset:30px; background:var(--panel); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:var(--font-mono);}
+  .donut-center .dnum{font-size:26px; font-weight:700; color:var(--text-hi);}
+  .donut-center .dlab{font-size:10px; color:var(--text-low); margin-top:2px;}
+  .legend-list{display:flex; flex-direction:column; gap:9px;}
+  .legend-item{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--text-mid);}
+  .legend-swatch{width:11px; height:11px; border-radius:3px; flex-shrink:0;}
 
   /* ---------- City cards ---------- */
   .city-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; margin-top:20px;}
@@ -165,12 +187,12 @@
   .city-card:hover{transform:translateY(-3px); border-color:var(--breath);}
   .city-card.selected{border-color:var(--breath); box-shadow:0 0 0 1px var(--breath), var(--shadow);}
   .city-card .catbadge{
-    position:absolute; top:14px; right:14px; font-size:10px; font-family:'JetBrains Mono'; padding:3px 8px; border-radius:12px; font-weight:700;
+    position:absolute; top:14px; right:14px; font-size:10px; font-family:var(--font-mono); padding:3px 8px; border-radius:12px; font-weight:700;
   }
-  .city-card h4{font-family:'Space Grotesk'; font-size:17px; margin-bottom:4px; padding-right:70px;}
-  .city-aqi{font-family:'Space Grotesk'; font-weight:700; font-size:28px; margin:8px 0 10px;}
+  .city-card h4{font-family:var(--font-display); font-size:17px; margin-bottom:4px; padding-right:70px;}
+  .city-aqi{font-family:var(--font-display); font-weight:700; font-size:28px; margin:8px 0 10px;}
   .city-metrics-row{display:flex; gap:14px; font-size:12px; color:var(--text-mid); margin-bottom:12px;}
-  .city-metrics-row b{color:var(--text-hi); font-family:'JetBrains Mono';}
+  .city-metrics-row b{color:var(--text-hi); font-family:var(--font-mono);}
   .mini-bar-track{height:5px; background:var(--mist-soft); border-radius:4px; overflow:hidden; margin-bottom:4px;}
   .mini-bar-fill{height:100%; border-radius:4px;}
   .mini-label{display:flex; justify-content:space-between; font-size:10.5px; color:var(--text-low); margin-bottom:8px;}
@@ -178,20 +200,20 @@
   /* ---------- Comparison mode ---------- */
   .compare-wrap{display:none; grid-template-columns:1fr auto 1fr; gap:20px; align-items:stretch; margin-top:20px;}
   .compare-wrap.active{display:grid;}
-  .compare-vs{align-self:center; font-family:'Space Grotesk'; font-weight:700; color:var(--text-low); font-size:14px;}
+  .compare-vs{align-self:center; font-family:var(--font-display); font-weight:700; color:var(--text-low); font-size:14px;}
 
   /* ---------- Deep dive ---------- */
   .deepdive-header{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:22px;}
   .deepdive-header h2{margin-bottom:0;}
   .analysis-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
-  .analysis-card h3{font-family:'Space Grotesk'; font-size:16px; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .analysis-card h3{font-family:var(--font-display); font-size:16px; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
   .impact-row{
     display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.05);
     font-size:13.5px;
   }
   .impact-row:last-child{border-bottom:none;}
   .impact-name{color:var(--text-mid);}
-  .risk-badge{font-size:12px; padding:3px 10px; border-radius:12px; font-family:'JetBrains Mono'; display:inline-flex; align-items:center; gap:5px;}
+  .risk-badge{font-size:12px; padding:3px 10px; border-radius:12px; font-family:var(--font-mono); display:inline-flex; align-items:center; gap:5px;}
   .risk-low{background:rgba(52,211,153,.14); color:var(--good);}
   .risk-mod{background:rgba(251,191,36,.14); color:var(--moderate);}
   .risk-high{background:rgba(239,68,68,.14); color:var(--danger);}
@@ -202,8 +224,8 @@
   .score-gauge{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:20px 0;}
   .grade-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px;}
   .grade-box{background:var(--mist-soft); border:1px solid var(--mist); border-radius:12px; padding:14px; text-align:center;}
-  .grade-box .glabel{font-size:11px; color:var(--text-low); text-transform:uppercase; letter-spacing:.08em; font-family:'JetBrains Mono';}
-  .grade-box .gletter{font-family:'Space Grotesk'; font-weight:700; font-size:26px; margin-top:4px;}
+  .grade-box .glabel{font-size:11px; color:var(--text-low); text-transform:uppercase; letter-spacing:.08em; font-family:var(--font-mono);}
+  .grade-box .gletter{font-family:var(--font-display); font-weight:700; font-size:26px; margin-top:4px;}
   .subscore-row{margin-top:16px;}
   .subscore-row .slabel{display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-mid); margin-bottom:6px;}
   .subscore-track{height:8px; background:var(--mist-soft); border-radius:6px; overflow:hidden;}
@@ -214,13 +236,13 @@
   .insight-card ul{list-style:none; margin-top:10px;}
   .insight-card li{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:13px;}
   .insight-card li:last-child{border-bottom:none;}
-  .rank-num{font-family:'JetBrains Mono'; color:var(--breath); margin-right:8px;}
+  .rank-num{font-family:var(--font-mono); color:var(--breath); margin-right:8px;}
   .callout{border-left:3px solid var(--breath); padding:12px 16px; background:var(--breath-soft); border-radius:0 10px 10px 0; font-size:13.5px; line-height:1.6; margin-top:10px;}
   .callout.warn{border-color:var(--moderate); background:rgba(251,191,36,.08);}
 
   /* ---------- Recommendations ---------- */
   .rec-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
-  .rec-card h4{font-family:'Space Grotesk'; font-size:14.5px; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .rec-card h4{font-family:var(--font-display); font-size:14.5px; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
   .rec-card ul{padding-left:18px; font-size:13px; color:var(--text-mid); line-height:1.9;}
   .rec-card ul li::marker{color:var(--breath);}
 
@@ -237,7 +259,7 @@
   }
   .btn{
     background:var(--breath); color:#04211f; border:none; padding:11px 20px; border-radius:10px; font-weight:700; font-size:13.5px;
-    cursor:pointer; font-family:'Inter'; transition:.2s;
+    cursor:pointer; font-family:var(--font-body); transition:.2s;
   }
   .btn:hover{transform:translateY(-2px); box-shadow:0 8px 20px -6px rgba(79,209,197,.5);}
   .btn.ghost{background:transparent; border:1px solid var(--mist); color:var(--text-hi);}
@@ -367,11 +389,16 @@
     <div class="section-label">Visualizations</div>
     <h2 class="title">Air Quality, Visualized</h2>
     <div class="charts-grid">
-      <div class="panel chart-card"><h3>AQI Comparison</h3><div class="cap">Across all filtered cities</div><canvas id="chartAqi"></canvas></div>
-      <div class="panel chart-card"><h3>City Ranking (Best → Worst)</h3><div class="cap">Sorted by current AQI</div><canvas id="chartRank"></canvas></div>
-      <div class="panel chart-card"><h3>PM2.5 Comparison</h3><div class="cap">Fine particulate matter, µg/m³</div><canvas id="chartPm25"></canvas></div>
-      <div class="panel chart-card"><h3>PM10 Comparison</h3><div class="cap">Coarse particulate matter, µg/m³</div><canvas id="chartPm10"></canvas></div>
-      <div class="panel chart-card full-span"><h3>AQI Category Distribution</h3><div class="cap">Share of cities in each CPCB health-risk band</div><canvas id="chartDist" style="max-height:220px;"></canvas></div>
+      <div class="panel chart-card"><h3>AQI Comparison</h3><div class="cap">Across all filtered cities</div><div class="barchart" id="chartAqi"></div></div>
+      <div class="panel chart-card"><h3>City Ranking (Best → Worst)</h3><div class="cap" id="rankChartCaption">Sorted by current AQI</div><div id="chartRank"></div></div>
+      <div class="panel chart-card"><h3>PM2.5 Comparison</h3><div class="cap">Fine particulate matter, µg/m³</div><div class="barchart" id="chartPm25"></div></div>
+      <div class="panel chart-card"><h3>PM10 Comparison</h3><div class="cap">Coarse particulate matter, µg/m³</div><div class="barchart" id="chartPm10"></div></div>
+      <div class="panel chart-card full-span"><h3>AQI Category Distribution</h3><div class="cap">Share of cities in each CPCB health-risk band</div>
+        <div class="donut-wrap">
+          <div class="donut" id="chartDist"><div class="donut-center" id="chartDistCenter"></div></div>
+          <div class="legend-list" id="chartDistLegend"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -450,21 +477,21 @@
     <h2 class="title">What the Data Is Telling Us</h2>
     <div class="insights-grid" style="margin-top:20px;">
       <div class="panel insight-card">
-        <h3 style="font-family:'Space Grotesk'; font-size:15px;">🌿 Top 3 Cleanest Cities</h3>
+        <h3 style="font-family:var(--font-display); font-size:15px;">🌿 Top 3 Cleanest Cities</h3>
         <ul id="topCleanList"></ul>
       </div>
       <div class="panel insight-card">
-        <h3 style="font-family:'Space Grotesk'; font-size:15px;">🏭 Top 3 Most Polluted</h3>
+        <h3 style="font-family:var(--font-display); font-size:15px;">🏭 Top 3 Most Polluted</h3>
         <ul id="topPollutedList"></ul>
       </div>
       <div class="panel insight-card">
-        <h3 style="font-family:'Space Grotesk'; font-size:15px;">📌 Anomaly &amp; Surprise</h3>
+        <h3 style="font-family:var(--font-display); font-size:15px;">📌 Anomaly &amp; Surprise</h3>
         <div class="callout warn">Biggest anomaly: Jaipur currently ranks worse than New Delhi — a seasonal reversal, since Delhi's worst readings usually appear in winter inversion months (Nov–Jan), not monsoon season.</div>
         <div class="callout">Most surprising: Ahmedabad and Hyderabad post near-identical AQI (58) despite sitting 900km apart in different climate zones and states — pointing to shared vehicular/industrial emission patterns rather than geography driving air quality.</div>
       </div>
     </div>
     <div class="panel" style="margin-top:16px;">
-      <h3 style="font-family:'Space Grotesk'; font-size:15px; margin-bottom:10px;">✅ Recommended Actions (National View)</h3>
+      <h3 style="font-family:var(--font-display); font-size:15px; margin-bottom:10px;">✅ Recommended Actions (National View)</h3>
       <div class="rec-grid" style="grid-template-columns:repeat(3,1fr);">
         <div class="subtle">Prioritize N95 masks and indoor purifiers in Jaipur, New Delhi and Amritsar — all in the Moderate band with rising PM2.5 load.</div>
         <div class="subtle">Cities with hard water (Bengaluru, Chennai, Delhi) should pair RO/UV filtration with a shower filter to cut hair-fall and scalp irritation risk.</div>
@@ -498,7 +525,7 @@
   <section class="section" style="padding-top:0;">
     <div class="share-strip">
       <div>
-        <div style="font-family:'Space Grotesk'; font-weight:700; font-size:17px;">Share your environmental health score</div>
+        <div style="font-family:var(--font-display); font-weight:700; font-size:17px;">Share your environmental health score</div>
         <div class="subtle" style="margin-top:4px;">Screenshot your report card above — built for LinkedIn.</div>
       </div>
       <div style="display:flex; gap:10px;">
@@ -570,7 +597,6 @@ let state = {
   compareMode:false, compareA:"New Delhi", compareB:"Pune",
   activeCity:"Ahmedabad"
 };
-let charts = {};
 
 /* ===================== INIT UI BUILDERS ===================== */
 function buildCitySelectorChips(){
@@ -664,58 +690,89 @@ function renderMetrics(){
   document.getElementById('aqiRangeLabel').textContent = state.aqiMin+" – "+state.aqiMax;
 }
 
-/* ===================== CHARTS ===================== */
-function destroyChart(key){ if(charts[key]){ charts[key].destroy(); } }
-const chartFont = {family:"'Inter',sans-serif", size:11};
-Chart.defaults.color = '#AAB6CC';
-Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
+/* ===================== CHARTS (dependency-free, pure DOM/CSS) ===================== */
+const POLLUTANT_META = {
+  aqi:{label:'AQI', unit:''},
+  pm25:{label:'PM2.5', unit:'µg/m³'},
+  pm10:{label:'PM10', unit:'µg/m³'}
+};
+
+function renderVBarChart(containerId, items, valueKey, colorFn){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  if(!items.length){ el.innerHTML = '<div class="subtle" style="padding:20px 0;">No cities match the current filters.</div>'; return; }
+  const maxVal = Math.max(...items.map(i=>i[valueKey]), 1);
+  el.innerHTML = items.map(c=>{
+    const val = c[valueKey];
+    const pct = Math.max((val/maxVal)*100, 3);
+    return `<div class="bar-col">
+        <div class="bar-val">${val}</div>
+        <div class="bar-fill" style="height:${pct}%; background:${colorFn(c)};"></div>
+        <div class="bar-label" title="${c.name}">${c.name}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderHBarChart(containerId, items, valueKey, colorFn){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  if(!items.length){ el.innerHTML = '<div class="subtle" style="padding:20px 0;">No cities match the current filters.</div>'; return; }
+  const maxVal = Math.max(...items.map(i=>i[valueKey]), 1);
+  el.innerHTML = items.map(c=>{
+    const val = c[valueKey];
+    const pct = Math.max((val/maxVal)*100, 3);
+    return `<div class="hbar-row">
+        <div class="hbar-name" title="${c.name}">${c.name}</div>
+        <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%; background:${colorFn(c)};"></div></div>
+        <div class="hbar-val">${val}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderDonutChart(items){
+  const cats = ["Good","Satisfactory","Moderate","Poor","Very Poor","Severe"];
+  const catColors = {"Good":"#34D399","Satisfactory":"#A3E635","Moderate":"#FBBF24","Poor":"#FB923C","Very Poor":"#F43F5E","Severe":"#7F1D2B"};
+  const donutEl = document.getElementById('chartDist');
+  const legendEl = document.getElementById('chartDistLegend');
+  const centerEl = document.getElementById('chartDistCenter');
+  if(!donutEl || !legendEl) return;
+  const total = items.length;
+  if(!total){
+    donutEl.style.background = 'var(--mist-soft)';
+    legendEl.innerHTML = '<div class="subtle">No cities match the current filters.</div>';
+    centerEl.innerHTML = '';
+    return;
+  }
+  let cumPct = 0;
+  const segments = [];
+  const legendRows = [];
+  cats.forEach(cat=>{
+    const count = items.filter(c=>getCategory(c.aqi).label===cat).length;
+    if(count===0) return;
+    const pct = (count/total)*100;
+    segments.push(`${catColors[cat]} ${cumPct}% ${cumPct+pct}%`);
+    cumPct += pct;
+    legendRows.push(`<div class="legend-item"><span class="legend-swatch" style="background:${catColors[cat]};"></span>${cat} — <b class="mono" style="color:var(--text-hi);">${count}</b> ${count===1?'city':'cities'}</div>`);
+  });
+  donutEl.style.background = `conic-gradient(${segments.join(', ')})`;
+  legendEl.innerHTML = legendRows.join('');
+  centerEl.innerHTML = `<div class="dnum">${total}</div><div class="dlab">CITIES</div>`;
+}
 
 function renderCharts(){
   const filtered = getFiltered();
-  const labels = filtered.map(c=>c.name);
-  const colors = filtered.map(c=>getCategory(c.aqi).hex);
+  const meta = POLLUTANT_META[state.pollutant] || POLLUTANT_META.aqi;
 
-  destroyChart('aqi');
-  charts.aqi = new Chart(document.getElementById('chartAqi'), {
-    type:'bar',
-    data:{labels, datasets:[{label:'AQI', data:filtered.map(c=>c.aqi), backgroundColor:colors, borderRadius:6}]},
-    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, grid:{color:'rgba(255,255,255,.05)'}}, x:{grid:{display:false}}}}
-  });
+  renderVBarChart('chartAqi', filtered, 'aqi', c=>getCategory(c.aqi).hex);
+  renderVBarChart('chartPm25', filtered, 'pm25', ()=>'#38BDF8');
+  renderVBarChart('chartPm10', filtered, 'pm10', ()=>'#4FD1C5');
 
-  destroyChart('rank');
-  const ranked = [...filtered].sort((a,b)=>a.aqi-b.aqi);
-  charts.rank = new Chart(document.getElementById('chartRank'), {
-    type:'bar',
-    data:{labels:ranked.map(c=>c.name), datasets:[{label:'AQI', data:ranked.map(c=>c.aqi), backgroundColor:ranked.map(c=>getCategory(c.aqi).hex), borderRadius:6}]},
-    options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true, grid:{color:'rgba(255,255,255,.05)'}}, y:{grid:{display:false}}}}
-  });
+  const ranked = [...filtered].sort((a,b)=>a[state.pollutant]-b[state.pollutant]);
+  renderHBarChart('chartRank', ranked, state.pollutant, c=>getCategory(c.aqi).hex);
+  const rankCaption = document.getElementById('rankChartCaption');
+  if(rankCaption) rankCaption.textContent = `Sorted by current ${meta.label}${meta.unit?' ('+meta.unit+')':''} (lowest → highest)`;
 
-  destroyChart('pm25');
-  charts.pm25 = new Chart(document.getElementById('chartPm25'), {
-    type:'bar',
-    data:{labels, datasets:[{label:'PM2.5 µg/m³', data:filtered.map(c=>c.pm25), backgroundColor:'#38BDF8', borderRadius:6}]},
-    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, grid:{color:'rgba(255,255,255,.05)'}}, x:{grid:{display:false}}}}
-  });
-
-  destroyChart('pm10');
-  charts.pm10 = new Chart(document.getElementById('chartPm10'), {
-    type:'bar',
-    data:{labels, datasets:[{label:'PM10 µg/m³', data:filtered.map(c=>c.pm10), backgroundColor:'#4FD1C5', borderRadius:6}]},
-    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, grid:{color:'rgba(255,255,255,.05)'}}, x:{grid:{display:false}}}}
-  });
-
-  destroyChart('dist');
-  const cats = ["Good","Satisfactory","Moderate","Poor","Very Poor","Severe"];
-  const catCounts = cats.map(cat=> filtered.filter(c=>getCategory(c.aqi).label===cat).length);
-  const catColors = ["#34D399","#A3E635","#FBBF24","#FB923C","#F43F5E","#7F1D2B"];
-  charts.dist = new Chart(document.getElementById('chartDist'), {
-    type:'doughnut',
-    data:{labels:cats, datasets:[{data:catCounts, backgroundColor:catColors, borderColor:'#111A2E', borderWidth:3}]},
-    options:{plugins:{legend:{position:'right', labels:{boxWidth:12, font:chartFont}}}, cutout:'62%'}
-  });
-
-  // pollutant focus swap: highlight relevant chart via outline
-  document.querySelectorAll('.chart-card').forEach(c=>c.style.outline='none');
+  renderDonutChart(filtered);
 }
 
 /* ===================== CITY CARDS ===================== */
@@ -728,7 +785,7 @@ function renderCityCards(){
     card.innerHTML = `
       <span class="catbadge" style="background:${cat.hex}22; color:${cat.hex};">${cat.label}</span>
       <h4>${c.name}</h4>
-      <div class="city-aqi" style="color:${cat.hex};">${c.aqi} <span style="font-size:12px; color:var(--text-low); font-family:'Inter';">AQI</span></div>
+      <div class="city-aqi" style="color:${cat.hex};">${c.aqi} <span style="font-size:12px; color:var(--text-low); font-family:var(--font-body);">AQI</span></div>
       <div class="mini-label"><span>PM2.5</span><span>${c.pm25} µg/m³</span></div>
       <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${Math.min(c.pm25/60*100,100)}%; background:#38BDF8;"></div></div>
       <div class="mini-label"><span>PM10</span><span>${c.pm10} µg/m³</span></div>
@@ -914,8 +971,8 @@ function renderCompare(){
   const card = (c)=>{
     const cat = getCategory(c.aqi);
     return `<div class="panel">
-      <h4 style="font-family:'Space Grotesk'; font-size:19px; margin-bottom:12px;">${c.name}</h4>
-      <div class="city-aqi" style="color:${cat.hex};">${c.aqi} <span style="font-size:12px; color:var(--text-low); font-family:'Inter';">AQI · ${cat.label}</span></div>
+      <h4 style="font-family:var(--font-display); font-size:19px; margin-bottom:12px;">${c.name}</h4>
+      <div class="city-aqi" style="color:${cat.hex};">${c.aqi} <span style="font-size:12px; color:var(--text-low); font-family:var(--font-body);">AQI · ${cat.label}</span></div>
       <div class="mini-label"><span>PM2.5</span><span>${c.pm25} µg/m³</span></div>
       <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${Math.min(c.pm25/60*100,100)}%; background:#38BDF8;"></div></div>
       <div class="mini-label"><span>PM10</span><span>${c.pm10} µg/m³</span></div>
@@ -944,15 +1001,20 @@ document.getElementById('compareCityA').addEventListener('change', e=>{ state.co
 document.getElementById('compareCityB').addEventListener('change', e=>{ state.compareB = e.target.value; renderCompare(); });
 
 /* ===================== MASTER RENDER ===================== */
+// Each step runs in isolation: if one section ever throws, every other
+// section still renders instead of the whole dashboard going blank.
+function safe(fn, label){
+  try{ fn(); } catch(err){ console.error('Render step failed:', label, err); }
+}
 function renderAll(){
-  renderHero();
-  renderMetrics();
-  renderCharts();
-  renderCityCards();
-  renderDeepDive();
-  renderReportCard();
-  renderRecommendations();
-  renderCompare();
+  safe(renderHero, 'renderHero');
+  safe(renderMetrics, 'renderMetrics');
+  safe(renderCharts, 'renderCharts');
+  safe(renderCityCards, 'renderCityCards');
+  safe(renderDeepDive, 'renderDeepDive');
+  safe(renderReportCard, 'renderReportCard');
+  safe(renderRecommendations, 'renderRecommendations');
+  safe(renderCompare, 'renderCompare');
 }
 
 /* ===================== BOOTSTRAP ===================== */
