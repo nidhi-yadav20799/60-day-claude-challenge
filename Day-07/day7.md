@@ -119,3 +119,12 @@ Reserve for rare, high-stakes moments:
 **Why:** It's the best all-around fit for your daily reality — a mix of coding, learning, research, and career prep where consistency and speed matter more than maximum depth on every single message. Standard effort keeps responses fast and usage-efficient for your high daily volume, while Sonnet 5 is still strong enough to handle real coding problems, explain concepts clearly, and write polished career documents.
 
 Keep Opus + High/Max effort in your back pocket for the small percentage of moments — architecture decisions, deep research, final portfolio polish, career-defining choices — where the extra depth genuinely changes the outcome. That combination (Sonnet 5 as your everyday engine, Opus as your occasional power tool) will give you the best balance of quality, speed, and usage efficiency as a daily user.
+
+# Screenshots
+
+![Strategy 1](strategy1.png)
+![Strategy 2](strategy2.png)
+![Strategy 3](strategy3.png)
+![Strategy 4](strategy4.png)
+![Strategy 5](strategy5.png)
+![Strategy 6](strategy6.png)
