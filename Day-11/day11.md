@@ -54,8 +54,8 @@ Learned how Applicant Tracking Systems (ATS) evaluate resumes and optimize resum
 
 # Deliverables
 
-- ✅ ATS Analysis
-- ✅ Gap Analysis
-- ✅ Optimized Resume
-- ✅ Resume Screenshots
-- ✅ Resume Document
+-  ATS Analysis
+-  Gap Analysis
+-  Optimized Resume
+-  Resume Screenshots
+-  Resume Document
