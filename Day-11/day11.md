@@ -2,51 +2,60 @@
 
 ## Objective
 
-Learned how Applicant Tracking Systems (ATS) evaluate resumes and how keyword optimization improves recruiter visibility.
+Learned how Applicant Tracking Systems (ATS) evaluate resumes and optimize resumes for better recruiter visibility using Claude AI.
 
 ---
 
-## ATS Analysis
+# ATS Analysis
 
-### ATS Match Score
+## ATS Match Score & Gap Analysis
 
-(Add ATS Match Score screenshot)
+![ATS Analysis 1](ats_analysis_1.png)
 
-### Gap Analysis
-
-- Missing Keywords
-- Missing Skills
-- Improvement Opportunities
-
-(Add Claude output or screenshot)
+![ATS Analysis 2](ats_analysis2.png)
 
 ---
 
-## Optimized Resume
+# Optimized Resume
 
-The resume was optimized by improving ATS compatibility, keyword alignment, formatting, and recruiter readability while maintaining 100% factual accuracy.
+## Page 1
 
-### Resume Preview
+![Optimized Resume Page 1](optimized_resume_1.png)
 
-(Add optimized resume screenshots)
+## Page 2
 
-### Resume File
-
-- Nidhi_Yadav_Resume_ATS_Optimized.docx
+![Optimized Resume Page 2](optimized_resume_2.png)
 
 ---
 
-## Key Learnings
+# Resume File
 
-- Understood how ATS systems scan resumes.
-- Improved keyword alignment based on the Job Description.
-- Enhanced resume readability without adding false information.
-- Learned the importance of ATS-friendly formatting.
+📄 **Nidhi_Yadav_Resume_ATS_Optimized.docx**
 
 ---
 
-## Tools Used
+# Key Learnings
+
+- Learned how ATS systems scan resumes before recruiters review them.
+- Improved keyword alignment based on the target job description.
+- Optimized resume formatting for ATS compatibility.
+- Understood the importance of relevant skills and recruiter-friendly resume structure.
+- Learned to enhance a resume without adding false information.
+
+---
+
+# Tools Used
 
 - Claude AI
 - Microsoft Word
 - GitHub
+
+---
+
+# Deliverables
+
+- ✅ ATS Analysis
+- ✅ Gap Analysis
+- ✅ Optimized Resume
+- ✅ Resume Screenshots
+- ✅ Resume Document
