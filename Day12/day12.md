@@ -1,7 +1,7 @@
 # Nidhi Yadav — Data Scientist (Fresher) Job Search & Personal Branding Toolkit
 *Reviewed and refined for ATS performance and recruiter appeal*
 
-**Contact:** nidhiyadav99927@gmail.com | 7016935828 | Ahmedabad, India
+**Contact:** nidhiyadav99927@gmail.com | 7********8 | Ahmedabad, India
 **LinkedIn:** linkedin.com/in/nidhi-yadav207 | **GitHub:** github.com/nidhi-yadav20799 | **Portfolio:** nidhi-yadav-portfolio-8bfb.vercel.app
 
 ---
