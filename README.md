@@ -62,8 +62,7 @@ This repository documents my progress throughout the 60 Day Claude AI Challenge,
 - Day 04 – Chain-of-Thought Prompting
 - Day 05 – Context Engineering
 - Day 06 – AI Nutrition Analytics Application
-- Day 07 – Claude Week 1 Challenge Quiz
-- Day 08 – Resume Enhancement & Career Development
+- Day 07 – Prompting Strategies & Best Practices- Day 08 – Resume Enhancement & Career Development
 - Day 09 – AI Career Assets
 - Day 10 – Resume Review & ATS Optimization
 - Day 11 – ATS Resume Optimizer & Resume Generator
