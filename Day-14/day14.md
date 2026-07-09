@@ -108,10 +108,12 @@ The company appears to be a legitimate and growing analytics organization. The p
 
 ## Screenshots
 
+## Screenshots
+
 ### Report Output
 
-![Report 1](screenshots/report1.png)
+![Report 1](report1.png)
 
-![Report 2](screenshots/report2.png)
+![Report 2](report2.png)
 
-![Report 3](screenshots/report3.png)
+![Report 3](report3.png)
