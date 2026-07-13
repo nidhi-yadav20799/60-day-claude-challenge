@@ -157,7 +157,6 @@ This repository contains:
 ## Connect With Me
 
 - **GitHub:** https://github.com/nidhi-yadav20799
-- **LinkedIn:** *(Add your LinkedIn profile here)*
 
 ---
 
