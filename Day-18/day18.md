@@ -1,70 +1,101 @@
-# Day 18 — Building and Using a Custom Claude Skill
+# Day 18 – Brain Dump Action Planner
 
 ## Overview
 
-Day 18 focused on creating and applying a **custom Claude Skill** — the `brain-dump-action-planner`. This skill transforms unstructured notes, meeting transcripts, and brainstorming sessions into clean, structured, and visually organized output. The goal was to explore how custom skills extend Claude's capabilities for real-world productivity workflows.
+Today I created a reusable Claude Custom Skill called **Brain Dump Action Planner** that converts unstructured notes, meeting transcripts, brainstorming sessions, and voice memos into a structured project dashboard.
+
+The skill automatically organizes information into summaries, action items, decisions, risks, blockers, conflicts, and open questions while preserving all original information without making assumptions.
+
+---
 
 ## Objective
 
-- Understand how custom Skills are defined and structured for Claude.
-- Build a skill that converts messy, unstructured notes into an organized, actionable format.
-- Apply the skill to a real meeting-notes example and generate a polished, interactive output.
-- Document the process, learnings, and output for future reference.
+- Build a reusable Claude Custom Skill.
+- Convert messy meeting notes into a structured dashboard.
+- Generate an interactive HTML artifact.
+- Improve project organization and productivity.
 
-## About the Custom Skill
+---
 
-**Skill name:** `brain-dump-action-planner`
+## Custom Skill
 
-**Purpose:** Transform messy notes, meeting transcripts, voice memos, brainstorming sessions, and stream-of-consciousness thoughts into structured summaries, action plans, decisions, open questions, and task lists — without inventing, assuming, or filling gaps.
+**Skill Name:** Brain Dump Action Planner
 
-**Key design principles:**
-- Preserve all names, dates, numbers, and terminology exactly as provided.
-- Never infer or complete missing information — display `Not specified` instead.
-- Support multiple modes, including a **Transcript Mode** for speaker-labeled notes and a **Merge Mode** for combining multiple sources.
-- Output is generated as a self-contained, interactive HTML artifact styled like a modern project dashboard (Notion / Linear / Asana-inspired).
+### Description
 
-## Steps Followed
+Transforms messy notes, meeting transcripts, brainstorming sessions, and voice memos into structured summaries, action plans, decisions, open questions, risks, blockers, and task lists while preserving all original information.
 
-1. **Defined the skill** — Created a `SKILL.md` file specifying the skill's name, description, output requirements, and formatting rules.
-2. **Specified required sections** — Summary, Key Takeaways, Action Items, Open Questions, Risks/Blockers, Conflicts, and Additional Notes.
-3. **Added status badges** — Standardized indicators (High/Medium/Low priority, Conflict, Open Question, Completed, Pending) for visual clarity.
-4. **Enabled Transcript Mode** — Added support for speaker-labeled notes, including speaker summaries, decisions by speaker, and action items by speaker.
-5. **Tested the skill** — Ran a sample project meeting transcript through the skill.
-6. **Generated the output** — Produced a fully interactive HTML dashboard summarizing the meeting.
-7. **Reviewed accuracy** — Verified that no information was invented and that missing details were correctly marked as `Not specified`.
+---
 
 ## Features
 
-- 📋 Automatic extraction of **action items** with task, owner, deadline, and status.
-- 🗣️ **Speaker-aware parsing** for transcript-style notes.
-- ⚠️ Dedicated **Conflicts** section to flag inconsistent deadlines, owners, or decisions.
-- ❓ Clear separation of **Open Questions** from resolved decisions.
-- 🎨 Clean, responsive **dashboard-style UI** with cards, badges, and collapsible sections.
-- 🚫 Strict **no-hallucination policy** — missing data is never guessed or filled in.
+- Interactive HTML Dashboard
+- Meeting Summary
+- Key Takeaways
+- Action Items Table
+- Open Questions
+- Risks & Blockers
+- Conflict Detection
+- Speaker Summary
+- Decisions by Speaker
+- Action Items by Speaker
+- Responsive Design
+- Modern Dashboard UI
+- Reusable Custom Skill
 
-## Screenshots
-
-> _Add screenshots of the generated HTML dashboard here, for example:_
->
-> - `screenshots/day18-summary-view.png`
-> - `screenshots/day18-action-items-table.png`
-> - `screenshots/day18-speaker-breakdown.png`
-
-## Key Learnings
-
-- Custom Skills allow Claude to consistently follow a defined output structure across different types of input.
-- Explicit rules (like "never invent missing information") are essential for building trustworthy, reusable automation.
-- Transcript-style inputs benefit from speaker-level attribution to avoid misassigning tasks or decisions.
-- A well-designed skill can turn a single block of raw text into a decision-ready, presentation-quality artifact in one pass.
+---
 
 ## Files Included
 
-| File | Description |
-|------|--------------|
-| `SKILL.md` | Definition of the custom `brain-dump-action-planner` skill |
-| `meeting_breakdown.html` | Sample structured output generated from a project meeting transcript |
-| `day18.md` | This documentation file summarizing Day 18's work |
+```
+Day-18/
+│
+├── dashboard.html
+├── day18.md
+├── 03_dashboard_overview.png
+├── 05_action_items_and_risks.png
+├── 08_speaker_summary_and_decisions.png
+└── 09_additional_notes.png
+```
+
+---
+
+## Dashboard Preview
+
+### Dashboard Overview
+
+![Dashboard Overview](03_dashboard_overview.png)
+
+---
+
+### Action Items & Risks
+
+![Action Items](05_action_items_and_risks.png)
+
+---
+
+### Speaker Summary & Decisions
+
+![Speaker Summary](08_speaker_summary_and_decisions.png)
+
+---
+
+### Additional Notes
+
+![Additional Notes](09_additional_notes.png)
+
+---
+
+## Key Learnings
+
+- Learned how to build reusable Claude Custom Skills.
+- Converted unstructured meeting notes into structured dashboards.
+- Created a responsive HTML dashboard with modern UI.
+- Organized action items, decisions, blockers, and open questions automatically.
+- Improved productivity using reusable AI workflows.
+
+---
 
 ## Conclusion
 
-Day 18 demonstrated how a custom Claude Skill can standardize the way unstructured information — like meeting notes — is turned into organized, actionable output. By enforcing strict formatting and accuracy rules, the `brain-dump-action-planner` skill produces reliable, presentation-ready dashboards without fabricating details. This exercise highlighted the value of well-scoped, rule-driven skills for building repeatable productivity workflows with Claude.
+The Brain Dump Action Planner demonstrates how Claude Custom Skills can automate note organization and project planning. Instead of manually restructuring meeting notes, the skill generates a professional dashboard that is reusable across different projects and workflows.
