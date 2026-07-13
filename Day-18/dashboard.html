@@ -1,0 +1,320 @@
+<style>
+  * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif; }
+  body { margin: 0; background: #0f1115; }
+  .page { background: radial-gradient(circle at 20% 0%, #1a1d29 0%, #0f1115 55%); min-height: 100%; padding-bottom: 40px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 18px; color: #e6e8ee; }
+
+  /* Header */
+  .header { position: relative; overflow: hidden; border-radius: 20px; padding: 40px 32px; margin: 24px 0 28px; background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 25%, #db2777 65%, #ea580c 100%); box-shadow: 0 20px 50px rgba(124,58,237,0.35); }
+  .header::before { content:""; position:absolute; top:-60px; right:-60px; width:220px; height:220px; background: rgba(255,255,255,0.14); border-radius:50%; filter: blur(10px); }
+  .header::after { content:""; position:absolute; bottom:-80px; left:-40px; width:200px; height:200px; background: rgba(255,255,255,0.08); border-radius:50%; }
+  .header h1 { position:relative; font-size: 26px; font-weight: 700; margin: 0 0 6px; color:#fff; letter-spacing:-0.02em; }
+  .header .sub { position:relative; color: rgba(255,255,255,0.85); font-size: 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .pill { background: rgba(255,255,255,0.18); backdrop-filter: blur(6px); padding: 4px 12px; border-radius: 999px; font-size:12px; font-weight:600; border:1px solid rgba(255,255,255,0.25); }
+
+  /* KPI cards */
+  .kpi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:14px; margin-bottom: 30px; }
+  .kpi-card { position:relative; padding:18px 18px 16px; border-radius:16px; background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; overflow:hidden; }
+  .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.2); }
+  .kpi-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .kpi-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+  .kpi-icon svg { width:18px; height:18px; }
+  .kpi-value { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
+  .kpi-label { font-size:12.5px; color:#9aa0ae; margin-top:2px; font-weight:500; }
+  .k-purple .kpi-icon { background: rgba(167,139,250,0.18); color:#c4b5fd; }
+  .k-amber .kpi-icon { background: rgba(251,191,36,0.18); color:#fcd34d; }
+  .k-pink .kpi-icon { background: rgba(244,114,182,0.18); color:#f9a8d4; }
+  .k-red .kpi-icon { background: rgba(248,113,113,0.18); color:#fca5a5; }
+
+  /* Section */
+  .section { margin-bottom: 18px; }
+  details.section-card { background: rgba(255,255,255,0.045); border:1px solid rgba(255,255,255,0.09); border-radius:16px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); overflow:hidden; transition: border-color .2s ease; }
+  details.section-card:hover { border-color: rgba(255,255,255,0.18); }
+  details.section-card[open] { padding-bottom: 4px; }
+  summary { list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; padding:16px 20px; font-size:14.5px; font-weight:600; color:#f1f2f6; }
+  summary::-webkit-details-marker { display:none; }
+  .summary-left { display:flex; align-items:center; gap:10px; }
+  .summary-icon { width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.08); }
+  .summary-icon svg { width:14px; height:14px; }
+  .chevron { transition: transform .25s ease; color:#8b8f9c; }
+  details[open] .chevron { transform: rotate(90deg); }
+  .section-body { padding: 0 20px 18px; }
+
+  /* Content pieces */
+  .lead { font-size:14px; line-height:1.7; color:#c7cad3; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px; }
+  .card { background: rgba(255,255,255,0.045); border:1px solid rgba(255,255,255,0.09); border-radius:12px; padding:14px 16px; transition: transform .2s ease, border-color .2s ease; }
+  .card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.2); }
+  .badge { display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; letter-spacing:0.01em; }
+  .badge-high { background: rgba(248,113,113,0.16); color:#fca5a5; }
+  .badge-med { background: rgba(251,191,36,0.16); color:#fcd34d; }
+  .badge-low { background: rgba(74,222,128,0.16); color:#86efac; }
+  .badge-pending { background: rgba(129,140,248,0.16); color:#a5b4fc; }
+  .badge-open { background: rgba(232,121,249,0.16); color:#f0abfc; }
+  .card-text { margin:8px 0 0; font-size:13.5px; color:#d3d5dd; line-height:1.55; }
+
+  table { width:100%; border-collapse: collapse; }
+  th, td { text-align:left; padding:12px 10px; font-size:13.5px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  th { color:#8b8f9c; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; }
+  tr:last-child td { border-bottom:none; }
+  tr { transition: background .2s ease; }
+  tbody tr:hover { background: rgba(255,255,255,0.04); }
+  .owner-chip { display:inline-flex; align-items:center; gap:7px; font-weight:600; color:#e6e8ee; }
+  .avatar { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; background: linear-gradient(135deg,#7c3aed,#db2777); }
+  .avatar.none { background: #3a3d47; color:#9aa0ae; }
+  .not-specified { color:#7c8091; font-style:italic; }
+
+  .speaker-block { border-left:3px solid; border-image: linear-gradient(180deg,#7c3aed,#db2777) 1; padding:10px 14px; background: rgba(255,255,255,0.03); border-radius: 0 10px 10px 0; margin-bottom:10px; }
+  .speaker-name { font-weight:700; font-size:13.5px; margin-bottom:3px; background: linear-gradient(90deg,#c4b5fd,#f9a8d4); -webkit-background-clip:text; background-clip:text; color:transparent; display:inline-block; }
+  .speaker-text { font-size:13.5px; color:#c7cad3; }
+
+  .attribution-note { font-size:12.5px; color:#fcd34d; background: rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.22); padding:9px 12px; border-radius:10px; margin-top:10px; }
+
+  @media (max-width:600px){
+    .header{padding:28px 20px;}
+    table, thead, tbody, th, td, tr { display:block; }
+    th{display:none;}
+    td{border:none; padding:4px 4px;}
+    tr{border:1px solid rgba(255,255,255,0.08); border-radius:10px; margin-bottom:10px; padding:8px; background: rgba(255,255,255,0.03);}
+    td:before{content:attr(data-label); display:block; font-size:10.5px; font-weight:700; text-transform:uppercase; color:#7c8091; margin-bottom:2px;}
+  }
+</style>
+
+<div class="page">
+<div class="wrap">
+
+  <div class="header">
+    <h1>Project meeting breakdown</h1>
+    <div class="sub">
+      <span class="pill">Transcript mode</span>
+      <span class="pill">4 speakers</span>
+      <span>Riya &middot; Aman &middot; Sonal &middot; Rahul</span>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card k-purple">
+      <div class="kpi-top">
+        <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></div>
+      </div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-label">Total tasks</div>
+    </div>
+    <div class="kpi-card k-amber">
+      <div class="kpi-top">
+        <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      </div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-label">Pending tasks</div>
+    </div>
+    <div class="kpi-card k-pink">
+      <div class="kpi-top">
+        <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></div>
+      </div>
+      <div class="kpi-value">1</div>
+      <div class="kpi-label">Open questions</div>
+    </div>
+    <div class="kpi-card k-red">
+      <div class="kpi-top">
+        <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+      </div>
+      <div class="kpi-value">3</div>
+      <div class="kpi-label">Risks / blockers</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <details class="section-card" open>
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+          Summary
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <p class="lead">The team discussed progress on the customer dashboard. Riya set a Friday deadline for the dashboard and assigned Aman to fix an authentication issue by Wednesday, which is currently delaying API integration. Sonal committed to preparing the presentation by Thursday. Rahul flagged that client approval is still needed. The team decided to use the new dashboard design, noted a risk that the API delay may postpone testing, and left open whether to deploy this week.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card" open>
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 12h7v8H4zM13 12h7v8h-7z"/></svg></span>
+          Key takeaways
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="grid">
+          <div class="card"><span class="badge badge-high">🔴 High priority</span><p class="card-text">Customer dashboard due Friday.</p></div>
+          <div class="card"><span class="badge badge-high">🔴 High priority</span><p class="card-text">Authentication issue is blocking API integration.</p></div>
+          <div class="card"><span class="badge badge-med">🟠 Medium priority</span><p class="card-text">Presentation due Thursday.</p></div>
+          <div class="card"><span class="badge badge-open">❓ Open question</span><p class="card-text">Client approval still outstanding.</p></div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card" open>
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+          Action items
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <table>
+          <thead><tr><th>Task</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td data-label="Task">Finish the customer dashboard</td>
+              <td data-label="Owner"><span class="not-specified">Not specified</span></td>
+              <td data-label="Deadline">Friday</td>
+              <td data-label="Status"><span class="badge badge-pending">⏳ Pending</span></td>
+            </tr>
+            <tr>
+              <td data-label="Task">Fix authentication</td>
+              <td data-label="Owner"><span class="owner-chip"><span class="avatar">A</span>Aman</span></td>
+              <td data-label="Deadline">Wednesday</td>
+              <td data-label="Status"><span class="badge badge-pending">⏳ Pending</span></td>
+            </tr>
+            <tr>
+              <td data-label="Task">Prepare the presentation</td>
+              <td data-label="Owner"><span class="owner-chip"><span class="avatar">S</span>Sonal</span></td>
+              <td data-label="Deadline">Thursday</td>
+              <td data-label="Status"><span class="badge badge-pending">⏳ Pending</span></td>
+            </tr>
+            <tr>
+              <td data-label="Task">Get client approval</td>
+              <td data-label="Owner"><span class="not-specified">Not specified</span></td>
+              <td data-label="Deadline"><span class="not-specified">Not specified</span></td>
+              <td data-label="Status"><span class="badge badge-pending">⏳ Pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card" open>
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span>
+          Open questions
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="card"><span class="badge badge-open">❓ Open question</span><p class="card-text">Should we deploy this week?</p></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card" open>
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+          Risks / blockers
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="card" style="margin-bottom:10px;"><span class="badge badge-high">🔴 High priority</span><p class="card-text">API integration is delayed because authentication isn't working (raised by Aman).</p></div>
+        <div class="card" style="margin-bottom:10px;"><span class="badge badge-med">🟠 Medium priority</span><p class="card-text">API delay may postpone testing.</p></div>
+        <div class="card"><span class="badge badge-med">🟠 Medium priority</span><p class="card-text">Client approval is still outstanding (raised by Rahul).</p></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card">
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 18a1 1 0 00.9 1.5h17.2a1 1 0 00.9-1.5L13.7 3.9a1 1 0 00-1.7 0z"/></svg></span>
+          Conflicts
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="card"><span class="not-specified">Not specified</span> &mdash; no conflicting deadlines, owners, or decisions were stated in the notes.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card">
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 12c2.5 0 4.5-2 4.5-4.5S14.5 3 12 3 7.5 5 7.5 7.5 9.5 12 12 12z"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>
+          Speaker summary
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="speaker-block"><div class="speaker-name">Riya</div><div class="speaker-text">Stated the customer dashboard needs to be finished before Friday, and assigned Aman to fix authentication by Wednesday.</div></div>
+        <div class="speaker-block"><div class="speaker-name">Aman</div><div class="speaker-text">Reported that API integration is delayed because authentication isn't working.</div></div>
+        <div class="speaker-block"><div class="speaker-name">Sonal</div><div class="speaker-text">Committed to preparing the presentation by Thursday.</div></div>
+        <div class="speaker-block"><div class="speaker-name">Rahul</div><div class="speaker-text">Flagged that client approval is still needed.</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card">
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+          Decisions by speaker
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="card">
+          Decision: <strong>Use the new dashboard design.</strong>
+          <div class="attribution-note">Attribution note: the notes do not specify which speaker made this decision.</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card">
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
+          Action items by speaker
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <div class="speaker-block"><div class="speaker-name">Aman</div><div class="speaker-text">Fix authentication — deadline Wednesday.</div></div>
+        <div class="speaker-block"><div class="speaker-name">Sonal</div><div class="speaker-text">Prepare the presentation — deadline Thursday.</div></div>
+        <div class="attribution-note">Attribution note: "Finish the customer dashboard before Friday" and "get approval from the client" were mentioned but not explicitly assigned to a speaker as owner.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section">
+    <details class="section-card">
+      <summary>
+        <span class="summary-left">
+          <span class="summary-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></span>
+          Additional notes
+        </span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="section-body">
+        <span class="not-specified">Not specified</span>
+      </div>
+    </details>
+  </div>
+
+</div>
+</div>
