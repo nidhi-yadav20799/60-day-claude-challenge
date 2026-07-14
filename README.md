@@ -1,9 +1,6 @@
 # 60 Day Claude AI Challenge
-
 ## About Me
-
 Hi, I'm **Nidhi Yadav**, a **B.Sc. Data Science graduate** currently working as a **Data Science Intern at CODE-A-NOVA**.
-
 This repository documents my journey through the **60 Day Claude AI Challenge**, where I build AI-powered applications, reusable Claude Skills, Prompt Engineering workflows, interactive dashboards, and practical Data Science projects while creating an industry-ready portfolio.
 
 ---
@@ -11,13 +8,11 @@ This repository documents my journey through the **60 Day Claude AI Challenge**,
 # Technical Skills
 
 ## Programming Languages
-
 - Python
 - SQL
 - R
 
 ## Data Science & Machine Learning
-
 - Machine Learning
 - Deep Learning
 - Natural Language Processing (NLP)
@@ -26,7 +21,6 @@ This repository documents my journey through the **60 Day Claude AI Challenge**,
 - Predictive Modeling
 
 ## Libraries & Frameworks
-
 - Pandas
 - NumPy
 - Scikit-learn
@@ -40,13 +34,11 @@ This repository documents my journey through the **60 Day Claude AI Challenge**,
 - Joblib
 
 ## Data Visualization & BI
-
 - Power BI
 - Tableau
 - Streamlit
 
 ## Tools
-
 - Claude AI
 - Git
 - GitHub
@@ -56,7 +48,6 @@ This repository documents my journey through the **60 Day Claude AI Challenge**,
 ---
 
 # Goals
-
 - Master Claude AI & Prompt Engineering
 - Build reusable AI Skills
 - Create AI-powered applications
@@ -91,12 +82,13 @@ This repository documents my journey through the **60 Day Claude AI Challenge**,
 | Day 17 | Vehicle Cost Analysis Dashboard |
 | Day 18 | Brain Dump Action Planner Skill |
 | Day 19 | Football Intelligence Hub |
+| Day 20 | AI Face Puzzle Game |
+| Day 21 | Digital Privacy Intelligence Dashboard |
 
 ---
 
 # Repository Structure
 
-```text
 Day-01/
 Day-02/
 Day-03/
@@ -116,17 +108,16 @@ Day-16/
 Day-17/
 Day-18/
 Day-19/
+Day-20/
+Day-21/
 README.md
-```
 
 ---
 
 # Current Status
-
-**19 / 60 Days Completed** 🚀
+**21 / 60 Days Completed** 🚀
 
 This repository contains:
-
 - Claude Custom Skills
 - AI Dashboards
 - Prompt Engineering Projects
@@ -140,7 +131,6 @@ This repository contains:
 ---
 
 # Focus Areas
-
 - Claude AI
 - Prompt Engineering
 - AI Workflows
@@ -155,7 +145,6 @@ This repository contains:
 ---
 
 ## Connect With Me
-
 - **GitHub:** https://github.com/nidhi-yadav20799
 
 ---
