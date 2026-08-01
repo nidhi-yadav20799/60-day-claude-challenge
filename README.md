@@ -1,12 +1,10 @@
-https://img.shields.io/github/stars/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge
-
-https://img.shields.io/github/forks/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge
-
-<img src="https://komarev.com/ghpvc/?username=nidhi-yadav20799&style=for-the-badge&color=blue" />
-
 <div align="center">
 
-<img src="https://github-profile-trophy.vercel.app/?username=nidhi-yadav20799&theme=tokyonight&no-frame=true&margin-w=15&margin-h=15"/>
+<img src="https://komarev.com/ghpvc/?username=nidhi-yadav20799&style=for-the-badge&color=blue"/>
+
+<img src="https://img.shields.io/github/stars/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge"/>
+
+<img src="https://img.shields.io/github/forks/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge"/>
 
 </div>
 
@@ -752,7 +750,47 @@ Dashboard Development
 
 <div align="center">
 
+<div align="center">
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=nidhi-yadav20799&show_icons=true&theme=tokyonight&hide_border=true"/>
+
+<img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=nidhi-yadav20799&theme=tokyonight&hide_border=true"/>
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=nidhi-yadav20799&layout=compact&theme=tokyonight&hide_border=true"/>
+
+</div>
+---
+<div align="center">
+
+<img src="https://img.shields.io/badge/Projects-37-blue?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/HTML_Apps-15+-orange?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/Prompt_Projects-20+-purple?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/Data_Science-Active-success?style=for-the-badge"/>
+
+</div>
+---
+<div align="center">
+
+<h3>Thanks for visiting my repository.</h3>
+
+<p>If you found these projects useful, consider giving the repository a star.</p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:4F46E5,100:06B6D4&height=130&section=footer"/>
+
+</div>
+
 ## 60 Days Claude AI Challenge
+
+
 
 Building practical AI applications, interactive educational experiences, and portfolio-ready software through consistent hands-on learning.
 
