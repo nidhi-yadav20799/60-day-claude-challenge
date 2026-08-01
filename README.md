@@ -19,26 +19,29 @@
 
 <br><br>
 
-<img src="https://img.shields.io/badge/Days%20Completed-36%20%2F%2060-22C55E?style=for-the-badge">
-<img src="https://img.shields.io/badge/Projects-35+-2563EB?style=for-the-badge">
-<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge">
-<img src="https://img.shields.io/badge/Repository-Portfolio-black?style=for-the-badge">
+<div align="center">
 
-<br>
+<img src="https://img.shields.io/badge/Claude_AI-7C3AED?style=for-the-badge"/>
 
-<img src="https://img.shields.io/badge/Claude-AI-7C3AED?style=flat-square">
-<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/SQL-336791?style=flat-square">
-<img src="https://img.shields.io/badge/R-276DC3?style=flat-square">
-<img src="https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=black">
-<img src="https://img.shields.io/badge/Tableau-E97627?style=flat-square">
-<img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/SQL-336791?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/R-276DC3?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black"/>
+
+<img src="https://img.shields.io/badge/Tableau-E97627?style=for-the-badge"/>
+
+<img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/>
 
 </div>
-
 ---
 
 # About This Repository
