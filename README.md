@@ -1,11 +1,15 @@
+https://img.shields.io/github/stars/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge
+
+https://img.shields.io/github/forks/nidhi-yadav20799/60-day-claude-challenge?style=for-the-badge
+
 <img src="https://komarev.com/ghpvc/?username=nidhi-yadav20799&style=for-the-badge&color=blue" />
 
-<img src="https://img.shields.io/github/stars/nidhi-yadav20799/60-Day-Claude-AI-Challenge?style=for-the-badge">
-
-<img src="https://img.shields.io/github/forks/nidhi-yadav20799/60-Day-Claude-AI-Challenge?style=for-the-badge">
-
-<img src="https://img.shields.io/github/license/nidhi-yadav20799/60-Day-Claude-AI-Challenge?style=for-the-badge">
 <div align="center">
+
+<img src="https://github-profile-trophy.vercel.app/?username=nidhi-yadav20799&theme=tokyonight&no-frame=true&margin-w=15&margin-h=15"/>
+
+</div>
+
 
 # 60 Days Claude AI Challenge
 
@@ -519,7 +523,7 @@ Challenge Completion
 
 ████████████████████████□□□□□□□□□□□□
 
-36 / 60 Days Completed
+37 / 60 Days Completed
 
 60%
 ```
