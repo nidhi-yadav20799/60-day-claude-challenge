@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cognitive Pattern Explorer</title>
+<meta name="description" content="A calm, exploratory self-reflection experience about how you think.">
+<style>
+  /* ===================== TOKENS ===================== */
+  :root{
+    --bg-0:#eef2f0;
+    --bg-1:#e4ebe7;
+    --paper:#fbfcfb;
+    --ink:#1f2e2a;
+    --ink-soft:#526059;
+    --ink-faint:#8a968f;
+    --line:rgba(31,46,42,.12);
+    --line-strong:rgba(31,46,42,.22);
+    --teal:#3f6f69;
+    --teal-deep:#2a4d48;
+    --teal-tint:#e4efec;
+    --lavender:#8477a6;
+    --lavender-tint:#efecf6;
+    --amber:#c07f3f;
+    --amber-tint:#f6ead9;
+    --rose:#b2685f;
+    --shadow-sm:0 2px 10px -4px rgba(31,46,42,.18);
+    --shadow-md:0 14px 34px -14px rgba(31,46,42,.28);
+    --radius-lg:22px;
+    --radius-md:14px;
+    --radius-sm:9px;
+    --dur-s:.22s;
+    --dur-m:.5s;
+    --dur-l:.9s;
+    --ease:cubic-bezier(.22,.68,.32,1);
+    --font-display:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
+    --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --accent:var(--teal);
+    --accent-tint:var(--teal-tint);
+    --accent-deep:var(--teal-deep);
+  }
+
+  [data-mode="stress"]{
+    --accent:var(--amber);
+    --accent-tint:var(--amber-tint);
+    --accent-deep:#8a5a26;
+    --bg-0:#f2ece3;
+    --bg-1:#ede2d2;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(180deg,var(--bg-0),var(--bg-1));
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    transition:background var(--dur-l) var(--ease);
+    overflow-x:hidden;
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; color:var(--ink); margin:0 0 .3em; }
+  p{ margin:0 0 1em; color:var(--ink-soft); }
+  button{ font-family:inherit; }
+
+  a,button{ cursor:pointer; }
+
+  :focus-visible{
+    outline:3px solid var(--accent);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  /* ===================== AMBIENT BACKGROUND (signature: drifting contour map) ===================== */
+  .ambient{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  }
+  .ambient svg{ position:absolute; width:140%; height:140%; opacity:.5; }
+  .contour-a{ top:-20%; left:-20%; animation:driftA 46s ease-in-out infinite; }
+  .contour-b{ bottom:-30%; right:-25%; animation:driftB 60s ease-in-out infinite; }
+  .contour path{ fill:none; stroke:var(--accent); stroke-width:1; opacity:.35; transition:stroke var(--dur-l) var(--ease); }
+  @keyframes driftA{
+    0%,100%{ transform:translate(0,0) rotate(0deg); }
+    50%{ transform:translate(3%,2%) rotate(2deg); }
+  }
+  @keyframes driftB{
+    0%,100%{ transform:translate(0,0) rotate(0deg); }
+    50%{ transform:translate(-3%,-2%) rotate(-2deg); }
+  }
+
+  /* ===================== LAYOUT ===================== */
+  #app{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+  .screen{
+    display:none;
+    flex:1;
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:28px 20px 64px;
+    opacity:0;
+    transform:translateY(10px);
+  }
+  .screen.active{
+    display:flex;
+    flex-direction:column;
+    animation:enter var(--dur-m) var(--ease) forwards;
+  }
+  @keyframes enter{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.5em;
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-deep); font-weight:600; margin-bottom:.6em;
+  }
+  .eyebrow::before{
+    content:""; width:20px; height:1px; background:var(--accent-deep); display:inline-block;
+  }
+
+  .lede{ font-size:1.05rem; max-width:56ch; }
+
+  /* ===================== PROGRESS TRAIL ===================== */
+  .progress-bar{
+    position:sticky; top:0; z-index:5;
+    backdrop-filter:blur(8px);
+    background:rgba(251,252,251,.72);
+    border-bottom:1px solid var(--line);
+    padding:14px 20px;
+  }
+  .progress-track{ max-width:760px; margin:0 auto; position:relative; }
+  .progress-steps{
+    list-style:none; display:flex; justify-content:space-between;
+    margin:0; padding:0; position:relative;
+  }
+  .progress-steps::before{
+    content:""; position:absolute; left:14px; right:14px; top:9px; height:2px;
+    background:var(--line-strong);
+  }
+  .progress-fill-line{
+    position:absolute; left:14px; top:9px; height:2px; background:var(--accent);
+    width:0%; transition:width var(--dur-l) var(--ease);
+  }
+  .progress-steps li{
+    position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;
+    gap:6px; font-size:.68rem; color:var(--ink-faint); flex:1; text-align:center;
+  }
+  .step-dot{
+    width:18px; height:18px; border-radius:50%; background:var(--paper);
+    border:2px solid var(--line-strong); transition:all var(--dur-m) var(--ease);
+  }
+  .progress-steps li.done .step-dot{ background:var(--accent); border-color:var(--accent); }
+  .progress-steps li.current .step-dot{
+    border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-tint);
+  }
+  .progress-steps li.current .step-label,
+  .progress-steps li.done .step-label{ color:var(--ink); font-weight:600; }
+  .step-label{ transition:color var(--dur-m) var(--ease); }
+
+  /* ===================== CARDS / PANELS ===================== */
+  .panel{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:clamp(20px,4vw,36px);
+    box-shadow:var(--shadow-md);
+  }
+
+  .btn{
+    appearance:none; border:1px solid var(--line-strong); background:var(--paper);
+    color:var(--ink); padding:.85em 1.5em; border-radius:999px; font-size:.95rem;
+    font-weight:600; transition:transform var(--dur-s) var(--ease), box-shadow var(--dur-s) var(--ease), background var(--dur-s);
+  }
+  .btn:hover{ box-shadow:var(--shadow-sm); transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0); }
+  .btn-primary{
+    background:var(--accent-deep); border-color:var(--accent-deep); color:#fdfdfc;
+  }
+  .btn-primary:hover{ background:var(--accent); border-color:var(--accent); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-ghost{ background:transparent; border-color:transparent; color:var(--ink-soft); }
+  .btn-ghost:hover{ background:var(--accent-tint); }
+
+  .btn-row{ display:flex; gap:12px; margin-top:28px; align-items:center; flex-wrap:wrap; }
+  .btn-row.spread{ justify-content:space-between; }
+
+  /* ===================== START SCREEN ===================== */
+  #screen-start{ justify-content:center; }
+  .title-block{ text-align:center; margin-bottom:8px; }
+  .title-block h1{ font-size:clamp(2rem,5vw,2.9rem); letter-spacing:-.01em; }
+  .title-block .lede{ margin:0 auto 1.6em; text-align:center; }
+
+  .mode-select{
+    display:flex; gap:10px; justify-content:center; margin:22px 0 8px; flex-wrap:wrap;
+  }
+  .mode-card{
+    position:relative; flex:1; min-width:190px; max-width:260px;
+    border:1.5px solid var(--line-strong); border-radius:var(--radius-md);
+    padding:16px 18px; background:var(--paper); text-align:left;
+    transition:all var(--dur-s) var(--ease);
+  }
+  .mode-card input{ position:absolute; opacity:0; inset:0; margin:0; cursor:pointer; }
+  .mode-card strong{ display:block; font-family:var(--font-display); font-size:1.05rem; margin-bottom:3px; }
+  .mode-card span{ font-size:.85rem; color:var(--ink-faint); }
+  .mode-card.checked{ border-color:var(--accent); background:var(--accent-tint); box-shadow:var(--shadow-sm); }
+  .mode-card:focus-within{ outline:3px solid var(--accent); outline-offset:2px; }
+
+  .disclaimer{
+    font-size:.78rem; color:var(--ink-faint); border-top:1px solid var(--line);
+    margin-top:26px; padding-top:16px; text-align:center;
+  }
+
+  .start-actions{ display:flex; justify-content:center; margin-top:24px; }
+
+  /* ===================== CHAPTER 1 : SCENARIO CARDS ===================== */
+  .q-meta{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .q-meta span{ font-size:.78rem; color:var(--ink-faint); }
+  .q-prompt{ font-size:clamp(1.15rem,2.6vw,1.5rem); font-family:var(--font-display); margin:.2em 0 1.1em; }
+  .q-frame{ font-size:.85rem; color:var(--accent-deep); font-style:italic; margin-bottom:.6em; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .option{
+    display:flex; align-items:flex-start; gap:12px;
+    border:1.5px solid var(--line-strong); border-radius:var(--radius-md);
+    padding:14px 16px; background:var(--paper);
+    transition:all var(--dur-s) var(--ease);
+  }
+  .option:hover{ border-color:var(--accent); background:var(--accent-tint); }
+  .option[aria-checked="true"]{
+    border-color:var(--accent-deep); background:var(--accent-tint); box-shadow:var(--shadow-sm);
+  }
+  .option .bullet{
+    flex:0 0 auto; width:18px; height:18px; border-radius:50%; margin-top:2px;
+    border:1.5px solid var(--line-strong); position:relative;
+  }
+  .option[aria-checked="true"] .bullet{ border-color:var(--accent-deep); }
+  .option[aria-checked="true"] .bullet::after{
+    content:""; position:absolute; inset:3px; border-radius:50%; background:var(--accent-deep);
+  }
+  .option p{ margin:0; color:var(--ink); font-size:.96rem; }
+
+  /* ===================== CHAPTER 2 : SORTABLE PRIORITY CARDS ===================== */
+  .sortable-list{ list-style:none; margin:20px 0 0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .sortable-item{
+    display:flex; align-items:center; gap:14px;
+    background:var(--paper); border:1.5px solid var(--line-strong); border-radius:var(--radius-md);
+    padding:14px 16px; box-shadow:var(--shadow-sm);
+    transition:box-shadow var(--dur-s) var(--ease), border-color var(--dur-s), transform var(--dur-s);
+    touch-action:none;
+  }
+  .sortable-item.dragging{ opacity:.45; }
+  .sortable-item.keyboard-active{ border-color:var(--accent-deep); box-shadow:0 0 0 3px var(--accent-tint); }
+  .rank-badge{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--accent-deep);
+    color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem;
+    font-family:var(--font-display);
+  }
+  .grip{
+    flex:0 0 auto; width:20px; color:var(--ink-faint); font-size:1.1rem; letter-spacing:2px;
+    cursor:grab; user-select:none;
+  }
+  .item-text strong{ display:block; font-size:.98rem; }
+  .item-text span{ font-size:.82rem; color:var(--ink-faint); }
+
+  /* ===================== CHAPTER 3 : TIMELINE MAP ===================== */
+  .trail-scenario{
+    background:var(--accent-tint); border-radius:var(--radius-md); padding:16px 18px;
+    font-size:.95rem; color:var(--ink); margin-bottom:22px; border:1px solid var(--line);
+  }
+
+  .timeline{
+    position:relative; display:flex; gap:10px; margin:10px 0 26px; padding-top:6px;
+    overflow-x:auto; scrollbar-width:thin;
+  }
+  .timeline::before{
+    content:""; position:absolute; top:24px; left:20px; right:20px; height:2px;
+    background:repeating-linear-gradient(90deg,var(--line-strong) 0 6px,transparent 6px 12px);
+    z-index:0;
+  }
+  .slot{
+    position:relative; z-index:1; flex:1 1 0; min-width:128px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .slot-marker{
+    width:12px; height:12px; border-radius:50%; background:var(--paper); border:2px solid var(--line-strong);
+    margin-top:14px; transition:all var(--dur-s) var(--ease);
+  }
+  .slot.filled .slot-marker{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .slot-label{ font-size:.68rem; text-align:center; color:var(--ink-faint); min-height:2.4em; }
+  .slot-well{
+    width:100%; min-height:96px; border:1.5px dashed var(--line-strong); border-radius:var(--radius-sm);
+    background:var(--paper); display:flex; align-items:center; justify-content:center; padding:8px;
+    font-size:.78rem; color:var(--ink-faint); text-align:center; transition:all var(--dur-s) var(--ease);
+  }
+  .slot-well.dragover{ border-color:var(--accent-deep); background:var(--accent-tint); }
+  .slot-well.selectable{ cursor:pointer; }
+  .slot-well.selectable:hover{ border-color:var(--accent); }
+  .chip{
+    background:var(--accent-deep); color:#fff; border-radius:10px; padding:8px 10px; font-size:.76rem;
+    position:relative; width:100%; line-height:1.35;
+  }
+  .chip button{
+    position:absolute; top:2px; right:4px; background:none; border:none; color:#fff; opacity:.75;
+    font-size:.85rem; padding:2px 4px; border-radius:50%;
+  }
+  .chip button:hover{ opacity:1; }
+
+  .token-pool{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+  .token{
+    border:1.5px solid var(--line-strong); background:var(--paper); border-radius:999px;
+    padding:9px 16px; font-size:.84rem; color:var(--ink); transition:all var(--dur-s) var(--ease);
+    touch-action:none;
+  }
+  .token:hover{ border-color:var(--accent); background:var(--accent-tint); }
+  .token.selected{ border-color:var(--accent-deep); background:var(--accent-deep); color:#fff; }
+  .token[aria-disabled="true"]{ display:none; }
+
+  .helper-text{ font-size:.78rem; color:var(--ink-faint); margin-top:4px; }
+
+  /* ===================== JOURNAL ===================== */
+  .journal-hero{
+    text-align:center; padding:26px 20px 10px;
+  }
+  .journal-hero .top-style{
+    font-family:var(--font-display); font-size:clamp(1.5rem,4vw,2.1rem); color:var(--accent-deep);
+  }
+  .bars{ display:flex; flex-direction:column; gap:14px; margin:22px 0; }
+  .bar-row{ display:flex; flex-direction:column; gap:5px; }
+  .bar-top{ display:flex; justify-content:space-between; font-size:.86rem; }
+  .bar-top strong{ font-weight:600; }
+  .bar-track{ height:10px; border-radius:999px; background:var(--line); overflow:hidden; }
+  .bar-fill{
+    height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent-deep));
+    transition:width 1.1s var(--ease);
+  }
+  .narrative p{ color:var(--ink); }
+  .narrative{ margin-top:8px; }
+
+  .journal-field{
+    width:100%; min-height:110px; border:1.5px solid var(--line-strong); border-radius:var(--radius-md);
+    padding:14px; font-family:var(--font-body); font-size:.92rem; resize:vertical; background:var(--paper);
+    color:var(--ink);
+  }
+  label.field-label{ font-size:.82rem; font-weight:600; color:var(--ink-soft); display:block; margin:20px 0 8px; }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width:640px){
+    .timeline{ flex-direction:column; overflow:visible; }
+    .timeline::before{ display:none; }
+    .slot{ flex-direction:row; align-items:flex-start; width:100%; text-align:left; }
+    .slot-marker{ margin-top:6px; }
+    .slot-label{ text-align:left; min-height:0; flex:0 0 96px; }
+    .progress-steps li{ font-size:.6rem; }
+    .step-label{ display:none; }
+    .progress-steps li.current .step-label{ display:block; position:absolute; top:22px; white-space:nowrap; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    .contour-a,.contour-b{ animation:none !important; }
+  }
+</style>
+</head>
+<body data-mode="calm">
+
+  <div class="ambient" aria-hidden="true">
+    <svg class="contour contour-a" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40,300 C120,180 220,420 300,300 C380,180 480,420 560,300"/>
+      <path d="M20,340 C110,230 230,450 310,340 C400,220 490,450 580,340"/>
+      <path d="M60,260 C140,150 220,380 300,260 C380,150 470,380 540,260"/>
+    </svg>
+    <svg class="contour contour-b" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,260 C120,140 220,380 320,260 C420,140 500,380 580,260"/>
+      <path d="M10,320 C100,420 220,180 320,320 C420,450 500,200 590,320"/>
+    </svg>
+  </div>
+
+  <div id="live-region" class="sr-only" role="status" aria-live="polite"></div>
+
+  <header class="progress-bar" id="progressBar" hidden>
+    <div class="progress-track">
+      <div class="progress-fill-line" id="progressFillLine"></div>
+      <ol class="progress-steps" id="progressSteps">
+        <li data-step="1"><span class="step-dot"></span><span class="step-label">Discover</span></li>
+        <li data-step="2"><span class="step-dot"></span><span class="step-label">Priorities</span></li>
+        <li data-step="3"><span class="step-dot"></span><span class="step-label">Map</span></li>
+        <li data-step="4"><span class="step-dot"></span><span class="step-label">Journal</span></li>
+      </ol>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- START -->
+    <section class="screen active" id="screen-start" aria-labelledby="start-h1">
+      <div class="title-block">
+        <p class="eyebrow" style="justify-content:center;">A quiet self-reflection experience</p>
+        <h1 id="start-h1">Cognitive Pattern Explorer</h1>
+        <p class="lede">Wander through a few small scenarios and notice how your mind tends to move &mdash; toward logic, toward feeling, toward loops, toward action, or somewhere balanced between them. There are no right answers here, only patterns worth noticing.</p>
+      </div>
+
+      <div class="panel">
+        <h2 style="font-size:1.05rem;">Before you begin, choose a starting frame of mind</h2>
+        <p style="font-size:.88rem;">This shapes the tone of the scenarios you'll see &mdash; not your results. Pick whichever feels closer to how you actually feel right now.</p>
+
+        <div class="mode-select" role="radiogroup" aria-label="Starting frame of mind">
+          <label class="mode-card checked" id="modeCalmLabel">
+            <input type="radio" name="mode" value="calm" checked id="modeCalm">
+            <strong>Calm Mode</strong>
+            <span>Slower pacing, softer colors, spacious framing.</span>
+          </label>
+          <label class="mode-card" id="modeStressLabel">
+            <input type="radio" name="mode" value="stress" id="modeStress">
+            <strong>Stress Mode</strong>
+            <span>Scenarios framed under time pressure and higher stakes.</span>
+          </label>
+        </div>
+
+        <p class="disclaimer">This experience is educational and reflective only. It does not diagnose, assess, or treat any mental health condition, and it is not a substitute for professional support.</p>
+
+        <div class="start-actions">
+          <button class="btn btn-primary" id="beginBtn">Begin the exploration →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 1 -->
+    <section class="screen" id="screen-ch1" aria-labelledby="ch1-h1">
+      <p class="eyebrow">Chapter One</p>
+      <h1 id="ch1-h1" style="font-size:1.6rem;">Discover Your Thinking Style</h1>
+      <p class="lede">Six small moments. Choose whichever response feels most like your first instinct &mdash; not what you think you *should* pick.</p>
+
+      <div class="panel">
+        <div class="q-meta">
+          <span id="qCounter">Question 1 of 6</span>
+          <span id="qModeTag">Calm framing</span>
+        </div>
+        <p class="q-frame" id="qFrame"></p>
+        <h2 class="q-prompt" id="qPrompt"></h2>
+        <div class="options" id="qOptions" role="radiogroup" aria-labelledby="qPrompt"></div>
+      </div>
+
+      <div class="btn-row spread">
+        <button class="btn btn-ghost" id="ch1Back">← Back</button>
+        <button class="btn btn-primary" id="ch1Next" disabled>Next →</button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section class="screen" id="screen-ch2" aria-labelledby="ch2-h1">
+      <p class="eyebrow">Chapter Two</p>
+      <h1 id="ch2-h1" style="font-size:1.6rem;">Choose Your Priorities</h1>
+      <p class="lede">Drag to rank these from what matters <strong>most</strong> (top) to what matters <strong>least</strong> (bottom) when you're facing a decision. On a keyboard, focus a card and use the Arrow keys.</p>
+
+      <div class="panel">
+        <ol class="sortable-list" id="ch2List" aria-label="Priority ranking, drag to reorder"></ol>
+      </div>
+
+      <div class="btn-row spread">
+        <button class="btn btn-ghost" id="ch2Back">← Back</button>
+        <button class="btn btn-primary" id="ch2Next">Next →</button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section class="screen" id="screen-ch3" aria-labelledby="ch3-h1">
+      <p class="eyebrow">Chapter Three</p>
+      <h1 id="ch3-h1" style="font-size:1.6rem;">Map Your Thinking</h1>
+      <p class="lede">Place five thought-fragments onto the moments when they'd most likely occur. Drag them, tap them, or select one and then choose its moment.</p>
+
+      <div class="panel">
+        <p class="trail-scenario" id="ch3Setup"></p>
+
+        <div class="timeline" id="ch3Timeline" aria-label="Thinking timeline, drop zone"></div>
+
+        <h3 style="font-size:.95rem;">Your thoughts</h3>
+        <div class="token-pool" id="ch3Pool" aria-label="Available thoughts to place"></div>
+        <p class="helper-text" id="ch3Helper">Fill all five moments to continue. 2 thoughts will be left over &mdash; that's expected.</p>
+      </div>
+
+      <div class="btn-row spread">
+        <button class="btn btn-ghost" id="ch3Back">← Back</button>
+        <button class="btn btn-primary" id="ch3Next" disabled>See my journal →</button>
+      </div>
+    </section>
+
+    <!-- JOURNAL -->
+    <section class="screen" id="screen-journal" aria-labelledby="journal-h1">
+      <div class="journal-hero">
+        <p class="eyebrow" style="justify-content:center;">Your Reflection Journal</p>
+        <h1 id="journal-h1" class="sr-only">Your Reflection Journal</h1>
+        <p style="font-size:.85rem; color:var(--ink-faint); margin-bottom:2px;">Your thinking today leans most toward</p>
+        <div class="top-style" id="topStyleName">&nbsp;</div>
+      </div>
+
+      <div class="panel">
+        <h2 style="font-size:1.05rem;">Your pattern breakdown</h2>
+        <div class="bars" id="barsContainer"></div>
+
+        <div class="narrative" id="narrativeText"></div>
+
+        <label class="field-label" for="journalInput">Add your own reflection (optional, stays on this device only)</label>
+        <textarea class="journal-field" id="journalInput" placeholder="What did you notice about how your mind moved through these scenarios?"></textarea>
+
+        <p class="disclaimer">This reflection describes tendencies, not truths about you. It is educational only, not a diagnosis or clinical assessment.</p>
+      </div>
+
+      <div class="btn-row spread">
+        <button class="btn btn-ghost" id="restartBtn">↺ Start over</button>
+        <button class="btn btn-primary" id="downloadBtn">Download journal (.txt)</button>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===================== DATA ===================== */
+
+  var TENDENCIES = ["analytical","emotional","overthinking","actionFirst","balanced"];
+
+  var TENDENCY_META = {
+    analytical:{
+      name:"Analytical Thinker",
+      summary:"You often lead with logic, breaking a situation into pieces and looking for evidence before deciding.",
+      calm:"In a calm state, this shows up as patient, methodical reasoning — you like to understand before you act.",
+      stress:"Under pressure, you tend to reach for facts and structure even faster, using logic as an anchor."
+    },
+    emotional:{
+      name:"Emotional Intuitive",
+      summary:"You often sense the emotional undercurrent of a situation before you can fully explain why.",
+      calm:"In a calm state, this intuition tends to feel quiet and reliable, guiding you gently toward what feels right.",
+      stress:"Under pressure, feelings tend to surface fast and strong, becoming the loudest signal in the room."
+    },
+    overthinking:{
+      name:"Overthinking Loop Style",
+      summary:"You often revisit the same thought from different angles, searching for a little more certainty.",
+      calm:"In a calm state, this looks like careful double-checking — thorough, if occasionally slow to settle.",
+      stress:"Under pressure, the loop can tighten, with the same worry circling back more insistently."
+    },
+    actionFirst:{
+      name:"Action-First Decision Maker",
+      summary:"You often move quickly once a decision is in front of you, favoring momentum over long deliberation.",
+      calm:"In a calm state, this reads as confident and decisive — you trust yourself to adjust as you go.",
+      stress:"Under pressure, this instinct sharpens further, pushing you to act before the moment passes."
+    },
+    balanced:{
+      name:"Balanced Reflective Thinker",
+      summary:"You often hold both logic and feeling in view, giving each a little room before choosing.",
+      calm:"In a calm state, this balance feels easy to access, letting you weigh a situation without rushing.",
+      stress:"Under pressure, you still tend to reach for a brief pause before committing to a direction."
+    }
+  };
+
+  var CH1_QUESTIONS = [
+    {
+      id:"q1",
+      calmFrame:"Picture an ordinary afternoon.",
+      stressFrame:"Picture a day already packed with deadlines.",
+      prompt:"A close friend cancels plans with you at the last minute, with barely any explanation. What happens first in your mind?",
+      options:[
+        {tendency:"analytical", text:"I start running through possible reasons — traffic, work, a forgotten conflict."},
+        {tendency:"emotional", text:"I feel a small sting and wonder for a second if I did something wrong."},
+        {tendency:"overthinking", text:"I reread their message a few times, turning it over for hidden meaning."},
+        {tendency:"actionFirst", text:"I reply right away to reschedule and move on with my day."},
+        {tendency:"balanced", text:"I notice a flicker of disappointment, then let it pass and make other plans."}
+      ]
+    },
+    {
+      id:"q2",
+      calmFrame:"You're reviewing your week ahead.",
+      stressFrame:"It's the middle of a hectic sprint at work.",
+      prompt:"You realize a project deadline has quietly moved up by two days. What's your first move?",
+      options:[
+        {tendency:"actionFirst", text:"I immediately start reorganizing my day around the new deadline."},
+        {tendency:"analytical", text:"I map out exactly what's left and calculate whether it's actually feasible."},
+        {tendency:"overthinking", text:"I start imagining every way this could go wrong before I've even begun."},
+        {tendency:"emotional", text:"I feel a jolt of pressure in my chest before I've thought anything through."},
+        {tendency:"balanced", text:"I take one slow breath, then sketch a rough plan and get moving."}
+      ]
+    },
+    {
+      id:"q3",
+      calmFrame:"You've just noticed a small mistake.",
+      stressFrame:"You've just noticed a mistake in front of others.",
+      prompt:"You catch an error you made in something you already sent or said. What's the instinct that shows up first?",
+      options:[
+        {tendency:"emotional", text:"A wave of embarrassment hits before I even think about fixing it."},
+        {tendency:"overthinking", text:"I start replaying the moment, wondering how bad it looked to others."},
+        {tendency:"analytical", text:"I assess exactly what went wrong and how to correct it cleanly."},
+        {tendency:"actionFirst", text:"I send a quick correction right away and keep moving."},
+        {tendency:"balanced", text:"I acknowledge the slip, fix what I can, and don't dwell on it long."}
+      ]
+    },
+    {
+      id:"q4",
+      calmFrame:"An unexpected opportunity lands in your inbox.",
+      stressFrame:"An opportunity lands with almost no time to decide.",
+      prompt:"You're offered something appealing but genuinely uncertain — a new role, a trip, a collaboration. What happens first?",
+      options:[
+        {tendency:"analytical", text:"I make a mental (or literal) list of pros, cons, and open questions."},
+        {tendency:"emotional", text:"I notice whether it feels exciting or heavy before I think about logistics."},
+        {tendency:"overthinking", text:"I start picturing every possible outcome, good and bad, on a loop."},
+        {tendency:"actionFirst", text:"I feel myself leaning toward saying yes almost immediately."},
+        {tendency:"balanced", text:"I sit with it for a bit, weighing both the facts and how it feels."}
+      ]
+    },
+    {
+      id:"q5",
+      calmFrame:"A disagreement comes up gently.",
+      stressFrame:"A disagreement erupts suddenly.",
+      prompt:"Someone you work or live with pushes back on something you said. What's your first internal reaction?",
+      options:[
+        {tendency:"emotional", text:"I feel defensive or hurt before I can even process their point."},
+        {tendency:"analytical", text:"I try to understand the logic of their objection before responding."},
+        {tendency:"overthinking", text:"I start rehearsing several different responses in my head at once."},
+        {tendency:"actionFirst", text:"I respond quickly to address it and move the conversation forward."},
+        {tendency:"balanced", text:"I pause, consider their point, then respond once I feel steady."}
+      ]
+    },
+    {
+      id:"q6",
+      calmFrame:"You're waiting on results you can't control.",
+      stressFrame:"You're waiting on results with a lot riding on them.",
+      prompt:"You're waiting to hear back about something important — an application, test results, a decision. How does the waiting feel?",
+      options:[
+        {tendency:"overthinking", text:"My mind keeps returning to it, checking and re-checking for updates."},
+        {tendency:"actionFirst", text:"I distract myself by staying busy and doing something else entirely."},
+        {tendency:"analytical", text:"I try to estimate the likely outcome based on what I actually know."},
+        {tendency:"emotional", text:"I feel the uncertainty in my body more than in my thoughts."},
+        {tendency:"balanced", text:"I acknowledge I can't control it and try to let the waiting be what it is."}
+      ]
+    }
+  ];
+
+  var CH2_CARDS = [
+    {id:"logic", title:"Logic & Evidence", sub:"Deciding based on facts you can point to", weights:{analytical:3, balanced:1}},
+    {id:"gut", title:"Gut Feeling", sub:"Trusting the first instinct that arrives", weights:{emotional:3, balanced:1}},
+    {id:"certainty", title:"Certainty Before Acting", sub:"Wanting to be fully sure before moving", weights:{overthinking:3}},
+    {id:"speed", title:"Speed & Momentum", sub:"Keeping things moving rather than stalling", weights:{actionFirst:3}},
+    {id:"harmony", title:"Harmony With Others", sub:"Considering how a choice affects people around you", weights:{emotional:2, balanced:2}},
+    {id:"space", title:"Space To Reflect", sub:"Giving a decision time to settle before committing", weights:{balanced:3, overthinking:1}}
+  ];
+
+  var CH3_SCENARIO = {
+    setup:"You've just received an important email you haven't opened yet. Map out how your thinking would likely unfold, moment by moment.",
+    slots:[
+      {id:"s1", label:"The moment it arrives"},
+      {id:"s2", label:"The first few seconds"},
+      {id:"s3", label:"About a minute later"},
+      {id:"s4", label:"Several minutes later"},
+      {id:"s5", label:"Right before you respond"}
+    ],
+    tokens:[
+      {id:"t1", text:"I immediately picture the worst-case outcome.", weights:{overthinking:3}},
+      {id:"t2", text:"I open it and start drafting a reply right away.", weights:{actionFirst:3}},
+      {id:"t3", text:"I check the sender and subject for objective clues first.", weights:{analytical:3}},
+      {id:"t4", text:"I notice my chest tighten before I've read a word.", weights:{emotional:3}},
+      {id:"t5", text:"I wait until I feel steady before deciding what to do.", weights:{balanced:3}},
+      {id:"t6", text:"I reread the same line again, and again.", weights:{overthinking:2, emotional:1}},
+      {id:"t7", text:"I ask someone else what they'd do in my position.", weights:{emotional:2, balanced:1}}
+    ]
+  };
+
+  /* ===================== STATE ===================== */
+
+  var state = {
+    mode:"calm",
+    ch1Index:0,
+    ch1Answers:{},            // questionId -> tendency
+    ch2Order:CH2_CARDS.map(function(c){ return c.id; }),
+    ch3Placements:{},         // slotId -> tokenId
+    ch3Selected:null,
+    scores:{}
+  };
+
+  /* ===================== UTIL ===================== */
+
+  function $(sel, ctx){ return (ctx||document).querySelector(sel); }
+  function $all(sel, ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(sel)); }
+
+  function announce(msg){
+    var live = $("#live-region");
+    live.textContent = "";
+    window.setTimeout(function(){ live.textContent = msg; }, 30);
+  }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  var SCREEN_ORDER = ["start","ch1","ch2","ch3","journal"];
+  var STEP_FOR_SCREEN = {ch1:1, ch2:2, ch3:3, journal:4};
+
+  function showScreen(name){
+    SCREEN_ORDER.forEach(function(s){
+      var el = $("#screen-"+s);
+      el.classList.toggle("active", s===name);
+    });
+    var bar = $("#progressBar");
+    if(name === "start"){
+      bar.hidden = true;
+    } else {
+      bar.hidden = false;
+      updateProgress(STEP_FOR_SCREEN[name]);
+    }
+    var heading = $("#screen-"+name+" h1");
+    if(heading){
+      heading.setAttribute("tabindex","-1");
+      window.setTimeout(function(){ heading.focus({preventScroll:false}); }, 60);
+    }
+    window.scrollTo({top:0, behavior: reducedMotion() ? "auto" : "smooth"});
+  }
+
+  function reducedMotion(){
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function updateProgress(step){
+    var pct = ((step-1)/3)*100;
+    $("#progressFillLine").style.width = pct + "%";
+    $all("#progressSteps li").forEach(function(li){
+      var s = parseInt(li.getAttribute("data-step"),10);
+      li.classList.toggle("done", s < step);
+      li.classList.toggle("current", s === step);
+    });
+  }
+
+  /* ===================== START SCREEN ===================== */
+
+  function initStart(){
+    var calmInput = $("#modeCalm");
+    var stressInput = $("#modeStress");
+    var calmLabel = $("#modeCalmLabel");
+    var stressLabel = $("#modeStressLabel");
+
+    function syncMode(){
+      state.mode = stressInput.checked ? "stress" : "calm";
+      document.body.setAttribute("data-mode", state.mode);
+      calmLabel.classList.toggle("checked", !stressInput.checked);
+      stressLabel.classList.toggle("checked", stressInput.checked);
+    }
+    calmInput.addEventListener("change", syncMode);
+    stressInput.addEventListener("change", syncMode);
+
+    $("#beginBtn").addEventListener("click", function(){
+      state.ch1Index = 0;
+      renderCh1Question();
+      showScreen("ch1");
+    });
+  }
+
+  /* ===================== CHAPTER 1 ===================== */
+
+  function renderCh1Question(){
+    var q = CH1_QUESTIONS[state.ch1Index];
+    $("#qCounter").textContent = "Question " + (state.ch1Index+1) + " of " + CH1_QUESTIONS.length;
+    $("#qModeTag").textContent = state.mode === "stress" ? "Stress framing" : "Calm framing";
+    $("#qFrame").textContent = state.mode === "stress" ? q.stressFrame : q.calmFrame;
+    $("#qPrompt").textContent = q.prompt;
+
+    var wrap = $("#qOptions");
+    wrap.innerHTML = "";
+    var order = shuffle(q.options);
+    var savedTendency = state.ch1Answers[q.id];
+
+    order.forEach(function(opt, i){
+      var div = document.createElement("div");
+      div.className = "option";
+      div.setAttribute("role","radio");
+      div.setAttribute("tabindex", i===0 ? "0" : "-1");
+      div.setAttribute("aria-checked", String(opt.tendency === savedTendency));
+      div.dataset.tendency = opt.tendency;
+
+      var bullet = document.createElement("span");
+      bullet.className = "bullet";
+      bullet.setAttribute("aria-hidden","true");
+
+      var p = document.createElement("p");
+      p.textContent = opt.text;
+
+      div.appendChild(bullet);
+      div.appendChild(p);
+      wrap.appendChild(div);
+
+      div.addEventListener("click", function(){ selectCh1Option(q.id, opt.tendency); });
+      div.addEventListener("keydown", function(e){ handleRadioKeydown(e, wrap); });
+    });
+
+    $("#ch1Back").disabled = false;
+    $("#ch1Next").disabled = !savedTendency;
+    $("#ch1Next").textContent = state.ch1Index === CH1_QUESTIONS.length-1 ? "Continue to priorities →" : "Next →";
+  }
+
+  function selectCh1Option(qId, tendency){
+    state.ch1Answers[qId] = tendency;
+    $all("#qOptions .option").forEach(function(el){
+      var checked = el.dataset.tendency === tendency;
+      el.setAttribute("aria-checked", String(checked));
+      el.setAttribute("tabindex", checked ? "0" : "-1");
+    });
+    $("#ch1Next").disabled = false;
+  }
+
+  function handleRadioKeydown(e, wrap){
+    var items = $all(".option", wrap);
+    var idx = items.indexOf(document.activeElement);
+    if(idx === -1) return;
+    if(e.key === "ArrowDown" || e.key === "ArrowRight"){
+      e.preventDefault();
+      var next = items[(idx+1) % items.length];
+      next.focus();
+      next.click();
+    } else if(e.key === "ArrowUp" || e.key === "ArrowLeft"){
+      e.preventDefault();
+      var prev = items[(idx-1+items.length) % items.length];
+      prev.focus();
+      prev.click();
+    } else if(e.key === " " || e.key === "Enter"){
+      e.preventDefault();
+      items[idx].click();
+    }
+  }
+
+  $("#ch1Next").addEventListener("click", function(){
+    if(state.ch1Index < CH1_QUESTIONS.length-1){
+      state.ch1Index++;
+      renderCh1Question();
+    } else {
+      renderCh2();
+      showScreen("ch2");
+    }
+  });
+  $("#ch1Back").addEventListener("click", function(){
+    if(state.ch1Index > 0){
+      state.ch1Index--;
+      renderCh1Question();
+    } else {
+      showScreen("start");
+    }
+  });
+
+  /* ===================== CHAPTER 2 : SORTABLE ===================== */
+
+  function renderCh2(){
+    state.ch2Order = shuffle(CH2_CARDS.map(function(c){ return c.id; }));
+    var list = $("#ch2List");
+    list.innerHTML = "";
+    state.ch2Order.forEach(function(id){
+      list.appendChild(buildSortableItem(id));
+    });
+    refreshRankBadges();
+    enableSortable(list);
+  }
+
+  function buildSortableItem(id){
+    var card = CH2_CARDS.filter(function(c){ return c.id===id; })[0];
+    var li = document.createElement("li");
+    li.className = "sortable-item";
+    li.setAttribute("draggable","true");
+    li.setAttribute("tabindex","0");
+    li.dataset.id = id;
+    li.setAttribute("role","option");
+    li.setAttribute("aria-roledescription","Draggable priority card");
+    li.setAttribute("aria-label", card.title + ": " + card.sub);
+
+    li.innerHTML =
+      '<span class="rank-badge" aria-hidden="true"></span>' +
+      '<span class="grip" aria-hidden="true">⋮⋮</span>' +
+      '<span class="item-text"><strong>' + card.title + '</strong><span>' + card.sub + '</span></span>';
+
+    li.addEventListener("keydown", function(e){ handleSortableKeydown(e, li); });
+    return li;
+  }
+
+  function refreshRankBadges(){
+    $all("#ch2List .sortable-item").forEach(function(li, i){
+      li.querySelector(".rank-badge").textContent = String(i+1);
+    });
+  }
+
+  function syncCh2OrderFromDOM(){
+    state.ch2Order = $all("#ch2List .sortable-item").map(function(li){ return li.dataset.id; });
+    refreshRankBadges();
+  }
+
+  function enableSortable(listEl){
+    var dragEl = null;
+
+    $all(".sortable-item", listEl).forEach(function(item){
+      item.addEventListener("dragstart", function(e){
+        dragEl = item;
+        item.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+        try{ e.dataTransfer.setData("text/plain", item.dataset.id); }catch(err){}
+      });
+      item.addEventListener("dragend", function(){
+        item.classList.remove("dragging");
+        dragEl = null;
+        syncCh2OrderFromDOM();
+        announce(item.querySelector(".item-text strong").textContent + " moved to position " + (Array.prototype.indexOf.call(listEl.children, item)+1));
+      });
+
+      // touch fallback
+      var touchState = null;
+      item.addEventListener("touchstart", function(e){
+        touchState = {startY:e.touches[0].clientY};
+        item.classList.add("dragging");
+      }, {passive:true});
+
+      item.addEventListener("touchmove", function(e){
+        if(!touchState) return;
+        e.preventDefault();
+        var touch = e.touches[0];
+        var target = document.elementFromPoint(touch.clientX, touch.clientY);
+        var overItem = target ? target.closest(".sortable-item") : null;
+        if(overItem && overItem !== item){
+          var rect = overItem.getBoundingClientRect();
+          var midpoint = rect.top + rect.height/2;
+          if(touch.clientY < midpoint){
+            listEl.insertBefore(item, overItem);
+          } else {
+            listEl.insertBefore(item, overItem.nextSibling);
+          }
+        }
+      }, {passive:false});
+
+      item.addEventListener("touchend", function(){
+        if(!touchState) return;
+        touchState = null;
+        item.classList.remove("dragging");
+        syncCh2OrderFromDOM();
+        announce(item.querySelector(".item-text strong").textContent + " moved to position " + (Array.prototype.indexOf.call(listEl.children, item)+1));
+      });
+    });
+
+    listEl.addEventListener("dragover", function(e){
+      e.preventDefault();
+      if(!dragEl) return;
+      var afterEl = getDragAfterElement(listEl, e.clientY);
+      if(afterEl == null){ listEl.appendChild(dragEl); }
+      else{ listEl.insertBefore(dragEl, afterEl); }
+    });
+  }
+
+  function getDragAfterElement(container, y){
+    var els = $all(".sortable-item:not(.dragging)", container);
+    var closest = {offset:-Infinity, element:null};
+    els.forEach(function(child){
+      var box = child.getBoundingClientRect();
+      var offset = y - box.top - box.height/2;
+      if(offset < 0 && offset > closest.offset){
+        closest = {offset:offset, element:child};
+      }
+    });
+    return closest.element;
+  }
+
+  function handleSortableKeydown(e, li){
+    var list = li.parentElement;
+    var items = $all(".sortable-item", list);
+    var idx = items.indexOf(li);
+
+    if(e.key === "ArrowUp"){
+      e.preventDefault();
+      if(idx > 0){
+        list.insertBefore(li, items[idx-1]);
+        li.focus();
+        syncCh2OrderFromDOM();
+        announce(li.querySelector(".item-text strong").textContent + " moved to position " + idx);
+      }
+    } else if(e.key === "ArrowDown"){
+      e.preventDefault();
+      if(idx < items.length-1){
+        list.insertBefore(items[idx+1], li);
+        li.focus();
+        syncCh2OrderFromDOM();
+        announce(li.querySelector(".item-text strong").textContent + " moved to position " + (idx+2));
+      }
+    }
+  }
+
+  $("#ch2Next").addEventListener("click", function(){
+    renderCh3();
+    showScreen("ch3");
+  });
+  $("#ch2Back").addEventListener("click", function(){
+    showScreen("ch1");
+  });
+
+  /* ===================== CHAPTER 3 : TIMELINE PLACEMENT ===================== */
+
+  function renderCh3(){
+    state.ch3Placements = {};
+    state.ch3Selected = null;
+    $("#ch3Setup").textContent = CH3_SCENARIO.setup;
+
+    var timeline = $("#ch3Timeline");
+    timeline.innerHTML = "";
+    CH3_SCENARIO.slots.forEach(function(slot){
+      var col = document.createElement("div");
+      col.className = "slot";
+      col.dataset.slotId = slot.id;
+
+      var marker = document.createElement("div");
+      marker.className = "slot-marker";
+      marker.setAttribute("aria-hidden","true");
+
+      var label = document.createElement("div");
+      label.className = "slot-label";
+      label.textContent = slot.label;
+
+      var well = document.createElement("div");
+      well.className = "slot-well selectable";
+      well.textContent = "Empty — place a thought here";
+      well.setAttribute("tabindex","0");
+      well.setAttribute("role","button");
+      well.setAttribute("aria-label", "Place selected thought at: " + slot.label);
+
+      col.appendChild(marker);
+      col.appendChild(label);
+      col.appendChild(well);
+      timeline.appendChild(col);
+
+      well.addEventListener("dragover", function(e){ e.preventDefault(); well.classList.add("dragover"); });
+      well.addEventListener("dragleave", function(){ well.classList.remove("dragover"); });
+      well.addEventListener("drop", function(e){
+        e.preventDefault();
+        well.classList.remove("dragover");
+        var tokenId = e.dataTransfer.getData("text/plain");
+        if(tokenId) placeToken(tokenId, slot.id);
+      });
+      well.addEventListener("click", function(){
+        if(state.ch3Placements[slot.id]) return;
+        if(state.ch3Selected){ placeToken(state.ch3Selected, slot.id); }
+      });
+      well.addEventListener("keydown", function(e){
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          if(state.ch3Placements[slot.id]) return;
+          if(state.ch3Selected){ placeToken(state.ch3Selected, slot.id); }
+        }
+      });
+    });
+
+    var pool = $("#ch3Pool");
+    pool.innerHTML = "";
+    CH3_SCENARIO.tokens.forEach(function(tok){
+      var btn = document.createElement("button");
+      btn.className = "token";
+      btn.type = "button";
+      btn.textContent = tok.text;
+      btn.dataset.tokenId = tok.id;
+      btn.setAttribute("draggable","true");
+      btn.setAttribute("aria-pressed","false");
+
+      btn.addEventListener("click", function(){ toggleSelectToken(tok.id); });
+      btn.addEventListener("dragstart", function(e){
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", tok.id);
+      });
+      btn.addEventListener("touchend", function(e){
+        // tap fallback selection is handled by click on most browsers; guard for touch-only devices
+      });
+
+      pool.appendChild(btn);
+    });
+
+    $("#ch3Next").disabled = true;
+    updateCh3Helper();
+  }
+
+  function toggleSelectToken(tokenId){
+    if(state.ch3Selected === tokenId){
+      state.ch3Selected = null;
+    } else {
+      state.ch3Selected = tokenId;
+    }
+    $all("#ch3Pool .token").forEach(function(btn){
+      var isSel = btn.dataset.tokenId === state.ch3Selected;
+      btn.classList.toggle("selected", isSel);
+      btn.setAttribute("aria-pressed", String(isSel));
+    });
+    updateCh3Helper();
+  }
+
+  function placeToken(tokenId, slotId){
+    // remove token from any prior slot
+    Object.keys(state.ch3Placements).forEach(function(sid){
+      if(state.ch3Placements[sid] === tokenId) delete state.ch3Placements[sid];
+    });
+    state.ch3Placements[slotId] = tokenId;
+    state.ch3Selected = null;
+    renderCh3Placements();
+  }
+
+  function removeToken(slotId){
+    delete state.ch3Placements[slotId];
+    renderCh3Placements();
+  }
+
+  function renderCh3Placements(){
+    var tok;
+    CH3_SCENARIO.slots.forEach(function(slot){
+      var col = $('.slot[data-slot-id="'+slot.id+'"]', $("#ch3Timeline"));
+      var well = col.querySelector(".slot-well");
+      var tokenId = state.ch3Placements[slot.id];
+      col.classList.toggle("filled", !!tokenId);
+      well.innerHTML = "";
+      if(tokenId){
+        tok = CH3_SCENARIO.tokens.filter(function(t){ return t.id===tokenId; })[0];
+        var chip = document.createElement("div");
+        chip.className = "chip";
+        chip.textContent = tok.text;
+        var rm = document.createElement("button");
+        rm.type = "button";
+        rm.setAttribute("aria-label","Remove this thought from " + slot.label);
+        rm.textContent = "×";
+        rm.addEventListener("click", function(e){ e.stopPropagation(); removeToken(slot.id); });
+        chip.appendChild(rm);
+        well.appendChild(chip);
+      } else {
+        well.textContent = "Empty — place a thought here";
+      }
+    });
+
+    // hide placed tokens from pool
+    var placedIds = Object.keys(state.ch3Placements).map(function(sid){ return state.ch3Placements[sid]; });
+    $all("#ch3Pool .token").forEach(function(btn){
+      var placed = placedIds.indexOf(btn.dataset.tokenId) !== -1;
+      btn.setAttribute("aria-disabled", String(placed));
+      btn.classList.toggle("selected", btn.dataset.tokenId === state.ch3Selected);
+    });
+
+    var filledCount = Object.keys(state.ch3Placements).length;
+    $("#ch3Next").disabled = filledCount < CH3_SCENARIO.slots.length;
+    updateCh3Helper();
+  }
+
+  function updateCh3Helper(){
+    var filled = Object.keys(state.ch3Placements).length;
+    var total = CH3_SCENARIO.slots.length;
+    if(state.ch3Selected){
+      var tok = CH3_SCENARIO.tokens.filter(function(t){ return t.id===state.ch3Selected; })[0];
+      $("#ch3Helper").textContent = 'Selected: "' + tok.text + '" — now choose a moment on the timeline.';
+    } else {
+      $("#ch3Helper").textContent = filled + " of " + total + " moments filled. Drag, tap, or select a thought and choose its moment.";
+    }
+  }
+
+  $("#ch3Next").addEventListener("click", function(){
+    computeResults();
+    renderJournal();
+    showScreen("journal");
+  });
+  $("#ch3Back").addEventListener("click", function(){
+    showScreen("ch2");
+  });
+
+  /* ===================== SCORING ===================== */
+
+  function computeResults(){
+    var scores = {};
+    TENDENCIES.forEach(function(t){ scores[t] = 0; });
+
+    Object.keys(state.ch1Answers).forEach(function(qId){
+      var t = state.ch1Answers[qId];
+      scores[t] += 3;
+    });
+
+    state.ch2Order.forEach(function(id, idx){
+      var card = CH2_CARDS.filter(function(c){ return c.id===id; })[0];
+      var factor = CH2_CARDS.length - idx; // top of list = highest factor
+      Object.keys(card.weights).forEach(function(t){
+        scores[t] += card.weights[t] * factor;
+      });
+    });
+
+    Object.keys(state.ch3Placements).forEach(function(slotId){
+      var tokenId = state.ch3Placements[slotId];
+      var tok = CH3_SCENARIO.tokens.filter(function(t){ return t.id===tokenId; })[0];
+      Object.keys(tok.weights).forEach(function(t){
+        scores[t] += tok.weights[t] * 2;
+      });
+    });
+
+    var total = TENDENCIES.reduce(function(sum,t){ return sum + scores[t]; }, 0);
+    var pct = {};
+    if(total <= 0){
+      TENDENCIES.forEach(function(t){ pct[t] = Math.round(100/TENDENCIES.length); });
+    } else {
+      TENDENCIES.forEach(function(t){ pct[t] = (scores[t]/total)*100; });
+      // round while keeping sum at 100
+      var rounded = {};
+      var running = 0;
+      var sortedKeys = TENDENCIES.slice().sort(function(a,b){ return pct[b]-pct[a]; });
+      sortedKeys.forEach(function(t, i){
+        if(i === sortedKeys.length-1){
+          rounded[t] = 100 - running;
+        } else {
+          rounded[t] = Math.round(pct[t]);
+          running += rounded[t];
+        }
+      });
+      pct = rounded;
+    }
+
+    state.scores = pct;
+  }
+
+  /* ===================== JOURNAL ===================== */
+
+  function renderJournal(){
+    var sorted = TENDENCIES.slice().sort(function(a,b){ return state.scores[b]-state.scores[a]; });
+    var top = sorted[0];
+    var second = sorted[1];
+
+    $("#topStyleName").textContent = TENDENCY_META[top].name;
+
+    var barsWrap = $("#barsContainer");
+    barsWrap.innerHTML = "";
+    sorted.forEach(function(t){
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      row.innerHTML =
+        '<div class="bar-top"><strong>'+TENDENCY_META[t].name+'</strong><span>'+state.scores[t]+'%</span></div>' +
+        '<div class="bar-track"><div class="bar-fill" data-target="'+state.scores[t]+'"></div></div>';
+      barsWrap.appendChild(row);
+    });
+
+    window.setTimeout(function(){
+      $all(".bar-fill", barsWrap).forEach(function(fill){
+        fill.style.width = fill.getAttribute("data-target") + "%";
+      });
+    }, 80);
+
+    var modeText = state.mode === "stress" ? TENDENCY_META[top].stress : TENDENCY_META[top].calm;
+    var narrative = $("#narrativeText");
+    narrative.innerHTML = "";
+
+    var p1 = document.createElement("p");
+    p1.textContent = TENDENCY_META[top].summary + " " + modeText;
+    narrative.appendChild(p1);
+
+    if(second && (state.scores[top] - state.scores[second]) <= 12){
+      var p2 = document.createElement("p");
+      p2.textContent = "This suggests you also lean noticeably toward being a " + TENDENCY_META[second].name + ": " + TENDENCY_META[second].summary.toLowerCase();
+      narrative.appendChild(p2);
+    }
+
+    var p3 = document.createElement("p");
+    p3.textContent = "Patterns like these tend to shift with context, sleep, and stress — treat this as a snapshot of today's tendencies, not a fixed identity.";
+    narrative.appendChild(p3);
+  }
+
+  $("#restartBtn").addEventListener("click", function(){
+    state.ch1Index = 0;
+    state.ch1Answers = {};
+    state.ch2Order = CH2_CARDS.map(function(c){ return c.id; });
+    state.ch3Placements = {};
+    state.ch3Selected = null;
+    $("#journalInput").value = "";
+    showScreen("start");
+  });
+
+  $("#downloadBtn").addEventListener("click", function(){
+    var sorted = TENDENCIES.slice().sort(function(a,b){ return state.scores[b]-state.scores[a]; });
+    var lines = [];
+    lines.push("COGNITIVE PATTERN EXPLORER — REFLECTION JOURNAL");
+    lines.push("Generated as a personal, educational reflection. Not a diagnosis.");
+    lines.push("");
+    lines.push("Frame of mind selected: " + (state.mode === "stress" ? "Stress Mode" : "Calm Mode"));
+    lines.push("");
+    lines.push("Pattern breakdown:");
+    sorted.forEach(function(t){
+      lines.push("  " + TENDENCY_META[t].name + " — " + state.scores[t] + "%");
+    });
+    lines.push("");
+    lines.push($("#narrativeText").textContent.replace(/(\.)(\s)/g,"$1\n\n"));
+    var journalNote = $("#journalInput").value.trim();
+    if(journalNote){
+      lines.push("");
+      lines.push("Your own reflection:");
+      lines.push(journalNote);
+    }
+    var blob = new Blob([lines.join("\n")], {type:"text/plain"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "cognitive-pattern-reflection.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  /* ===================== INIT ===================== */
+
+  initStart();
+
+})();
+</script>
+</body>
+</html>
