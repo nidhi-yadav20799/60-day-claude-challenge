@@ -2,7 +2,7 @@
 
 ## Overview
 
-Built a premium browser-based **PDF Splitter & Merger** using HTML, CSS, and JavaScript. The application processes PDF files entirely on the client side, allowing users to split and merge documents securely without uploading files to any server.
+Built a premium browser-based **PDF Splitter & Merger** using HTML, CSS, and JavaScript. The application processes PDF files entirely in the browser, allowing users to split and merge documents securely without uploading them to external servers.
 
 ---
 
@@ -10,39 +10,32 @@ Built a premium browser-based **PDF Splitter & Merger** using HTML, CSS, and Jav
 
 ## PDF Splitter
 
-- Upload PDF files
 - Automatic page detection
-- Page thumbnail previews
-- Split by custom page ranges
+- Page thumbnail preview
+- Custom page ranges
 - Split after selected pages
 - Split every N pages
 - Extract selected pages
-- Multiple split ranges
-- Output preview before processing
-- Input validation
+- Output preview
+- Page validation
 
 ## PDF Merger
 
-- Drag & Drop PDF upload
-- Upload multiple PDF files
-- Reorder PDFs before merging
-- File previews
-- Total file and page count
-- Merge PDFs into a single document
+- Drag & Drop upload
+- Merge multiple PDF files
+- Reorder files before merging
+- File preview
 - Download merged PDF
 
 ## Additional Features
 
-- Client-side processing
 - Responsive Design
-- Modern Commercial UI
-- Dark Mode Support
+- Dark & Light Theme
 - Smooth Animations
-- Loading Indicators
-- Accessibility Support
 - Keyboard Shortcuts
-- Offline Support after initial load
-- Error Handling
+- Accessibility Support
+- Client-side Processing
+- Offline Support
 
 ---
 
@@ -50,17 +43,17 @@ Built a premium browser-based **PDF Splitter & Merger** using HTML, CSS, and Jav
 
 ## 1. Application Home
 
-Initial interface showing the PDF Splitter & Merger application.
+Initial interface of the PDF Splitter & Merger.
 
-![Application Home](Screenshot%201.png)
+![Application Home](Screenshot%202026-08-04%20203131.png)
 
 ---
 
-## 2. PDF Splitter
+## 2. PDF Splitter with Page Preview
 
-Uploaded PDF with detected pages, page thumbnails, split configuration, and output preview.
+Uploaded PDF showing detected pages, thumbnails, split configuration, and output preview.
 
-![PDF Splitter](Screenshot%202.png)
+![PDF Splitter](Screenshot%202026-08-04%20203445.png)
 
 ---
 
@@ -68,15 +61,15 @@ Uploaded PDF with detected pages, page thumbnails, split configuration, and outp
 
 Multiple PDF files uploaded and arranged before merging.
 
-![PDF Merger](Screenshot%203.png)
+![PDF Merger](Screenshot%202026-08-04%20203520.png)
 
 ---
 
-## 4. Processed Output
+## 4. Processed PDF Output
 
 Merged or split PDF generated successfully and ready for download.
 
-![Processed Output](Screenshot%204.png)
+![Processed Output](Screenshot%202026-08-04%20203610.png)
 
 ---
 
@@ -102,16 +95,15 @@ Merged or split PDF generated successfully and ready for download.
 
 # Key Learnings
 
-- Built a browser-based PDF utility using client-side JavaScript.
-- Learned secure PDF processing without backend services.
-- Implemented drag-and-drop document handling.
-- Created page preview and thumbnail generation.
-- Built PDF splitting using custom page ranges.
-- Implemented PDF merging with file reordering.
-- Improved responsive UI/UX design and browser file handling.
+- Built a browser-based PDF utility using JavaScript.
+- Learned client-side PDF processing.
+- Implemented drag-and-drop file handling.
+- Generated page thumbnails and previews.
+- Created PDF splitting and merging workflows.
+- Designed a responsive commercial-quality interface.
 
 ---
 
 # Outcome
 
-Successfully developed a professional PDF Splitter & Merger featuring browser-based PDF processing, page previews, drag-and-drop uploads, responsive layouts, and a polished commercial user experience.
+Successfully developed a professional browser-based PDF Splitter & Merger with secure client-side processing, page previews, drag-and-drop interactions, and a polished user experience.
